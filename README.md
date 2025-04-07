@@ -9,7 +9,7 @@ Amare Capital Management (Pty) Ltd is a systematic proprietary trading firm dedi
 
 This strategy identifies potential bullish reversals using the hammer candlestick pattern, filtered by the asset's position relative to its 200-day moving average and volatility conditions measured by the True Range Delta. It aims to enter long positions when a hammer candle forms under specific conditions and manage risk with stop-losses, profit-targets, and specific situation handling. The approach is backtested across multiple tickers to ensure robustness, reflecting Amare Capital Management's commitment to rigorous statistical validation.
 
-STEP 1: DATA PREPARATION
+**STEP 1: DATA PREPARATION**
 
 (GATHER AND PROCESS OHLC(OPEN, HIGH, LOW, CLOSE) DATA FOR MULTIPLE TICKERS, ADDING DERIVED COLUMNS AND FEATURES)
 
@@ -48,5 +48,50 @@ STEP 1: DATA PREPARATION
                return pd.read_excel
 
 **Explanation**
+
+The implementation of the TickersData class enables efficient data retrieval from Yahoo Finance, with local caching in Excel files to ensure data integrity and reduce redundancy. By integrating key technical indicators such as the 200-day Moving Average (MA200), Average True Range (ATR), and hammer candle pattern detection, the firm streamlines its data management process, allowing greater focus on the development and refinement of trading strategies.
+
+**STEP 2: FEATURE ENGINEERING**
+
+(Create trading signals based on technical analysis)
+
+    import pandas as pd
+    from constants2 import FEATURE_COL_NAME_ADVANCED, FEATURE_COL_NAME_BASIC 
+    from derivative_columns.atr import add_atr_col_to_df 
+    from derivative_columns.ma import add_moving_average 
+    from derivative_columns.hammer import add_col_is_hammer
+    from derivative_columns.shooting_star import add_col_is_shooting_star
+
+    MOVING_AVERAGE_N = 200
+    REQUIRED_DERIVATIVE_COLUMNS_F_V1_BASIC = {"atr_14", f"ma_{MOVING_AVERAGE_N}", "is_hammer", "is_shooting_star"}
+
+    def add_required_cols_for_f_v1_basic(df: pd.DataFrame) -> pd.DataFrame:
+        df_columns = df.columns 
+        internal_df = df.copy()
+        if f"ma_{MOVING_AVERAGE_N}" not in df_columns:
+            internal_df = add_moving_average(df=internal_df, n=MOVING_AVERAGE_N)
+        if "atr_14" not in df_columns:
+            internal_df = add_atr_col_to_df(df=internal_df, n=14, exponential=False)
+        if "is_hammer" not in df_columns:
+            internal_df = add_col_is_hammer(df=internal_df)
+        if "is_shooting_star" not in df_columns:
+            internal_df = add_col_is_shooting_star(df=internal_df)
+        return internal_df 
+
+    def add_features_v1_basic(df: pd.DataFrame, atr_multiplier_threshold: int = 6) -> pd.DataFrame:
+        res = df.copy()
+        for col in REQUIRED_DERIVATIVE_COLUMNS_F_V1_BASIC:
+            if col not in res.columns:
+                res = add_required_cols_for_f_v1_basic(df=res)
+        res[FEATURE_COL_NAME_BASIC] = res["Close"] < res[f"ma_{MOVING_AVERAGE_N}"]
+        res[FEATURE_COL_NAME_ADVANCED] = (res["ma_200"] - res["Close"]) >= (res["atr_14"] * atr_multiplier_threshold)
+        return res 
+
+**Explanation**
+
+The add_features_v1_basic function is enhanced to incorporate a hammer candle signal (is_hammer) and to refine FEATURE_COL_NAME_ADVANCED to activate when the stock price is significantly below the 200-day Moving Average (MA200) with a confirmed hammer pattern. This transformation of complex market data into clear, actionable signals supports the firm's mission to elevate trading decisions through statistically grounded methodologies.
+
+**STEP 3: POSITION SIZING LOGIC**
+
 
 
