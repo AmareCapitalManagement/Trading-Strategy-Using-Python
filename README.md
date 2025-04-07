@@ -13,6 +13,37 @@ STEP 1: DATA PREPARATION
 
 (GATHER AND PROCESS OHLC(OPEN, HIGH, LOW, CLOSE) DATA FOR MULTIPLE TICKERS, ADDING DERIVED COLUMNS AND FEATURES)
 
+from typing import Callable, List 
+import pandas as pd
+import os
+import yfinance as yf
+from derivative_columns.atr import add_tr_delta_col_to_ohlc
+from utils.import_data import get_local_ticker_data_file_name 
 
+MUST_HAVE_DERIVATIVE_COLUMNS = {"tr", "tr_delta"}
 
+def import_yahoo_finance_daily(ticker:str) -> pd.DataFrame:
+    stock = yf.Ticker(ticker)
+    df = stock.history(start="2020-01-01", end="2025_04_06", interval="1d")
+    df = df[["Open", "High", "Low", "Close", "Volume"]]
+    df.index = pd.to.datetime(df.index).tz_localize(None)
+    return df 
+
+class TickersData:
+    def __init__(self, tickers: list[str], add_features_cols_func: Callable, import_ohlc_func: Callable = import_yahoo_finance_daily):
+        self.tickers_data_with_features = {}
+        self.add_features_cols_func = add_features_cols_func
+        self.import_ohlc_func = add_features_cols_func
+        for ticker in tickers:
+            df = self.get_df_with_features(ticker=ticker)
+            for col in MUST_HAVE_DERIVATIVE_COLUMNS:
+                if col not in df.columns:
+                    df = add_tr_delta_col_to_ohlc(ohlc_df=df)
+            self.tickers_data_with_features[ticker] = df
+            
+    def get_df_with_features(self, ticker: str) -> pd.DataFrame:
+        filename_with_features = get_local_ticker_data_file_name(ticker, "with_features")
+        filename_raw = get_local_ticker_data_file_name(ticker, "raw")
+        if os.path.exists(filename_with_features):
+            return pd.read_excel
 
