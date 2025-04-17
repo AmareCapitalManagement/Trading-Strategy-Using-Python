@@ -5,7 +5,7 @@ Amare Capital Management (Pty) Ltd is a systematic proprietary trading firm spec
 
    ![ACM w color](https://github.com/user-attachments/assets/85e2320e-5494-4713-8c31-b8aeece758b5)
 
-# PYTHON BACKTESTING: HAMMER REVERSAL WITH VOLATILITY FILTER 
+# PYTHON BACKTESTING: TREND-ALIGNED REVERSAL STRATEGY WITH VOLATILITY AND RISK MANAGEMENT FILTERS  
 
 This strategy identifies potential bullish reversals using the hammer candlestick pattern, filtered by the asset's position relative to its 200-day moving average and volatility conditions measured by the Average True Range. It aims to enter long positions when a hammer candle forms under specific conditions and manage risk with stop-losses, profit-targets, and specific situation handling. The approach is backtested across multiple tickers to ensure robustness, reflecting Amare Capital Management's commitment to rigorous statistical validation.
 
