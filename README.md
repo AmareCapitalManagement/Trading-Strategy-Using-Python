@@ -5,6 +5,179 @@ Amare Capital Management (Pty) Ltd is a systematic investment management firm sp
 
    ![ACM w color](https://github.com/user-attachments/assets/85e2320e-5494-4713-8c31-b8aeece758b5)
 
+# QUANTITATIVE VALUE AND MOMENTUM STRATEGY: COMBINING VALUE AND HIGH-QUALITY MOMENTUM FACTORS
+
+Value investing identifies stocks trading below their intrinsiv value, using metrics like price-to-earnings (P/E), price-to-book (P/B), price-to-sales (P/S), enterprise value to EBITDA (EV/EBITDA), and enterprise value to gross profi (EV/GP). These metrics evaluate a stock's price relative to earnings, assets, sales, or profitability. Momentum investing focuses on stocks with the highest recent price momentum, assuming that stocks that have been performing well recently will continue to perform well in the short-term. This strategy targets stocks with the lowest valuation metrics, assuming they are undervalued and likely to outperform and exhibit strong, high-quality momentum across varios timeframes (1-month, 3-months, 6-months, and 1-year)
+
+**Step 1: Setting Up the Environment and Importing Stocks**
+
+(Efficient data processing requires libraries for numerical computations, data manipulation, and financial data retrieval)
+
+    import numpy as np
+    import pandas as pd
+    import yfinance as yf
+    import math
+    from scipy import stats 
+    import warnings
+    from statistics import mean 
+    from datetime import datetime, timedelta
+
+    warnings.filterwarnings("ignore")
+
+    stocks = ["AAPL", "TSLA", "MSFT","AMZN", "META", "JNJ", "JPM", "XOM", "NVDA"]
+
+**Explanation**
+
+We use numpy for calculations, pandas for data handling, yfinance for Yahoo Finance data, math for share calculations, scipy.stats for percentiles, and xlswriter for Excel output. The warnings library supresses yfinance depreciation warnings.
+
+**Step 2: Fetching Stock Data and Building the DataFrame**
+
+(Valueation metrics (P/E, P/B, P/S, EV/EBIT, EV/EBITDA, EV/GP) are critical for identifying value stocks, and momentum metrics (1-M, 3-M, 6-M, 12-M) for identifying trending stocks. A DataFrame organizes these metrics for analysis, enabling ranking and filtering)
+
+    def get_valuation_ratios(ticker):
+        stock = yf.Ticker(ticker)
+        info = stock.info
+
+        try:
+            name = info.get('shortName', 'N/A')
+            price = info.get('currentPrice', np.nan)
+            pe_ratio = info.get('trailingPE', np.nan)
+            pb_ratio = info.get('priceToBook', np.nan)
+
+            if pb_ratio == np.nan:
+                print(f"P/B is missing for {ticker}")
+        
+            ps_ratio = info.get('priceToSalesTrailing12Months', np.nan)
+            ev = info.get('enterpriseValue', np.nan)
+            ebitda = info.get('ebitda', np.nan)
+            gross_profit = info.get('grossProfits', np.nan)
+        
+            ev_to_ebitda = ev / ebitda if ev and ebitda else np.nan
+            ev_to_gp = ev / gross_profit if ev and gross_profit else np.nan
+
+            return {
+                'Ticker': ticker,
+                'Price': price,
+                'P/E': pe_ratio,
+                'P/B': pb_ratio,
+                'P/S': ps_ratio,
+                'EV/EBITDA': ev_to_ebitda,
+                'EV/GP': ev_to_gp
+            }
+
+      except Exception as e:
+          print(f"Error fetching ratios for {ticker}: {e}")
+          return {
+              'Ticker': ticker,
+              'Price': price,
+              'P/E': np.nan,
+              'P/B': np.nan,
+              'P/S': np.nan,
+              'EV/EBITDA': np.nan,
+              'EV/GP': np.nan
+          }
+
+    value_data = [get_valuation_ratios(ticker) for ticker in stocks]
+    value_df = pd.DataFrame(data)
+
+    end_date = datetime.today()
+    start_date = end_date - timedelta(days=730)
+
+    price_data = yf.download(stocks, start=start_date, end=end_date)['Close']
+    momentum_df = pd.DataFrame(index=stocks)
+
+    lookback_periods = {
+        '1M': 21,
+        '3M': 63,
+        '6M': 126,
+        '1Y': 252,
+    }
+
+    for label, days in lookback_periods.items():
+        returns = price_data.pct_change(periods=days).iloc[-1]
+        momentum_df[f"{label} Return"] = returns
+
+    for label in lookback_periods.keys():
+        momentum_df[f"{label} Return"] = momentum_df[f"{label} Return"].apply(lambda x: f"{x:.2%}")
+
+    combined_df = pd.merge(value_df, momentum_df, left_on='Ticker', right_index=True)
+    pd.set_option('display.max_columns', None)
+    print(combined_df)
+
+**Explanation**
+
+We use yfinance to fetch stock dat (price, trailing P/E, P/B, P/S, enterprise value, EBIT, EBITDA, gross profit) and calculate EV/EBIT, EV/EBITDA, and EV/GP. A DataFrame is initialized with columns for tickers, prices, shares to buy, metrics, percentiles, and a robust value (RV) score. Error handling ensures robustness if data is missing. Combining data fetching and DataFrame creation streamlines the data collection process. Also, the historical price data will allow us to calculate momentum returns over different time periods.
+
+**Step 3: Handling Missing Data**
+
+(Financial datasets often have missing values due to unavailable metrics. Addressing these ensures a complete dataset for analysis)
+
+    valuation_columns=['P/E', 'P/B', 'P/S','EV/EBITDA', 'EV/GP']
+
+    momentum_columns = ['1M Return','3M Return','6M Return','1Y Return']
+
+    for column in valuation_columns:
+        combined_df[column].fillna(combined_df[column].mean(), inplace=True)
+
+    for column in momentum_columns:
+        combined_df[column] = combined_df[column].str.rstrip('%').astype(float) / 100
+        combined_df[column].fillna(combined_df[column].mean(), inplace=True)
+    
+    print("Missing values per column:")
+    print(combined_df.isnull().sum())
+
+**Explanation**
+
+We replace missing values with the mean of non-misssing values for each metric. This preserves the dataset's size, assuming missing data is not systematically biased. This step remains standalone due to its distinct focus on data cleaning.
+
+**Step 4: Calculating Percentile and RV Score**
+
+(Percentiles normalize valuation metrics and momentum metrics to a 0-1 scale for comparison across stocks. A composite Score, the mean of these percentiles, robustly measures value. We select the stocks by a Score, and reset the index)
+
+    value_metrics = {
+        'P/E': 'PE Percentile',
+        'P/B': 'PB Percentile',
+        'P/S': 'PS Percentile',
+        'EV/EBITDA': 'EV/EBITDA Percentile',
+        'EV/GP': 'EV/GP Percentile'
+    }
+
+    momentum_metrics = {
+        '1M Return': '1M Percentile',
+        '3M Return': '3M Percentile',
+        '6M Return': '6M Percentile',
+        '1Y Return': '1Y Percentile'
+    }
+
+    for row in combined_df.index:
+        for metric, pct_col in value_metrics.items():
+            combined_df.loc[row, pct_col] = stats.percentileofscore(
+                combined_df[metric], combined_df.loc[row, metric]
+            ) / 100
+
+    for row in combined_df.index:
+        for metric, pct_col in momentum_metrics.items():
+            combined_df.loc[row, pct_col] = stats.percentileofscore(
+                combined_df[metric], combined_df.loc[row, metric]
+            ) / 100
+
+    combined_df['Value Score'] = combined_df[list(value_metrics.values())].mean(axis=1)
+    combined_df['Momentum Score'] = combined_df[list(momentum_metrics.values())].mean(axis=1)
+
+    top_value_stocks = combined_df.sort_values('Value Score').head(9).reset_index(drop=True)
+    top_momentum_stocks = combined_df.sort_values('Momentum Score', ascending=False).head(9).reset_index(drop=True)
+
+    final_df = combined_df[['Ticker', 'Value Score', 'Momentum Score']]
+
+    final_df.sort_values(by='Value Score', ascending=True, inplace=True)
+    final_df.reset_index(drop=True, inplace=True)
+
+    print(final_df)
+
+**Explanation**
+
+We compute percentile ranks for each metric using scipy.stats.percentileofscore. The RV Score is the average of the valuation metrics, with lower scores indicating better value, and the average of the momentum metrics, with higher scores indicating higher quality momentum. We sort by RV Score, select the top stocks, and reset the index. Combining these steps aligns the analytical focus on ranking and filtering.
+
 # PYTHON BACKTESTING: TREND-ALIGNED REVERSAL STRATEGY WITH VOLATILITY AND RISK MANAGEMENT FILTERS  
 
 This strategy identifies potential bullish reversals using the hammer candlestick pattern, filtered by the asset's position relative to its 200-day moving average and volatility conditions measured by the Average True Range. It aims to enter long positions when a hammer candle forms under specific conditions and manage risk with stop-losses, profit-targets, and specific situation handling. The approach is backtested across multiple tickers to ensure robustness, reflecting Amare Capital Management's commitment to rigorous statistical validation.
@@ -550,5 +723,8 @@ The reason for integrating intraday tools such as SMA, volume profiles, relative
 
 # CONCLUSION
 
-In conclusion, Amare Capital Managememt (Pty) Ltd has developed a robust and systematic trading framework that leverages Python to implement two distinct yet complementary strategies: the Hammer Reversal with Volatility Filter and the Anchored VWAP approach. The Hammer Reversal strategy effectively identifies bullish reversal opportunities through rigorous analysis, incorporating hammer candlestick patterns, volatility filters, and risk management protocols, validated via comprehensive backtesting across multiple tickers. Meanwhile, the Anchored VWAP strategy enhances trend identification and trade execution by utilizing dynamic support and resistance levels, enriched with intraday tools and relative strength analysis for real-time adaptability. Together, these strategies exemplify Amare Capital Management's commitment to data-driven decision-making, disciplined risk management, and continous refinement, positioning the firm to achieve consistent and sustainable performance in diverse market conditions.
+In conclusion, Amare Capital Management (Pty) Ltd has built a disciplined, data-driven investment framework centered on a Quantitative Value and Momentum strategy. This approach combines deep value metrics—such as P/E, P/B, P/S, EV/EBITDA, and EV/GP—with strong, high-quality momentum across multiple timeframes (1-month to 1-year) to identify undervalued stocks poised for outperformance.
 
+Complementing this, the firm employs two systematic trading strategies: the Hammer Reversal with Volatility Filter and the Anchored VWAP approach. The Hammer Reversal strategy captures bullish reversal setups using candlestick analysis, volatility filters, and strict risk protocols, validated through extensive backtesting. The Anchored VWAP strategy enhances trend detection and execution through dynamic support/resistance levels and intraday tools for real-time adaptability.
+
+Together, these strategies reflect Amare Capital Management’s commitment to consistent, evidence-based investing across diverse market conditions.
