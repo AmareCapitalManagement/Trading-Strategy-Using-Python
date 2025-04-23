@@ -1,7 +1,7 @@
 # Trading-Strategy-Using-Python
 Amare Capital Management (Pty) Ltd 
 
-Amare Capital Management (Pty) Ltd is a systematic hedge fund specializing in trading and investing in stocks and stock derivatives. We are committed to developing and refining quantitative trading strategies through rigorous statistical analysis and robust backtesting. Our approach focuses on simplifying and enhancing strategy performance, leveraging a Python-based framework to systematically identify and capitalize on market opportunities.
+Amare Capital Management (Pty) Ltd is a systematic proprietary trading firm specializing in trading and investing in stocks and stock derivatives. We are committed to developing and refining quantitative trading strategies through rigorous statistical analysis and robust backtesting. Our approach focuses on simplifying and enhancing strategy performance, leveraging a Python-based framework to systematically identify and capitalize on market opportunities.
 
 Beyond the markets, we are also avid poker players who apply strategic thinking to our investment approach. This background in competitive poker sharpens our decision-making process, teaching us to navigate uncertainty, manage risk, and exploit inefficiencies with precision. By integrating these principles into our investment process, we develop adaptive strategies designed to outperform across various market regimes. 
 
