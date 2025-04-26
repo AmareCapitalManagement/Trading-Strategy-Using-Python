@@ -7,7 +7,7 @@ Amare Capital Management (Pty) Ltd is a quantitative investment management firm 
 
 # QUANTITATIVE VALUE AND MOMENTUM STRATEGY: COMBINING VALUE AND HIGH-QUALITY MOMENTUM FACTORS
 
-Value investing identifies stocks trading below their intrinsiv value, using metrics like price-to-earnings (P/E), price-to-book (P/B), price-to-sales (P/S), enterprise value to EBITDA (EV/EBITDA), and enterprise value to gross profit (EV/GP). These metrics evaluate a stock's price relative to earnings, assets, sales, or profitability. Momentum investing focuses on stocks with the highest recent price momentum, assuming that stocks that have been performing well recently will continue to perform well in the short-term. This strategy targets stocks with the lowest valuation metrics, assuming they are undervalued and likely to outperform and exhibit strong, high-quality momentum across varios timeframes (1-month, 3-months, 6-months, and 1-year)
+Value investing identifies stocks trading below their intrinsic value, using metrics like price-to-earnings (P/E), price-to-book (P/B), price-to-sales (P/S), enterprise value to EBITDA (EV/EBITDA), and enterprise value to gross profit (EV/GP). These metrics evaluate a stock's price relative to earnings, assets, sales, or profitability. Momentum investing focuses on stocks with the highest recent price momentum, assuming that stocks that have been performing well recently will continue to perform well in the short-term. This strategy targets stocks with the lowest valuation metrics, assuming they are undervalued and likely to outperform and exhibit strong, high-quality momentum across varios timeframes (1-month, 3-months, 6-months, and 1-year)
 
 **Step 1: Setting Up the Environment and Importing Stocks**
 
