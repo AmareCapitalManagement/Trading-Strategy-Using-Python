@@ -478,6 +478,135 @@ The System Quality Number (SQN) is a popular indicator of the trading system's q
 
 SQN_modified is devoid of this drawback. It is simply the average of trade profits divided by the standard deviation of profits. A trading system is considered not bad if its SQN_modified has a positive value of at least 0.1. Systems whose value exceeds 0.2 are deemed decent or even good.
 
+**Step 8: Bearish Signal Detection Using Shooting Star and 200-Day Moving Average**
+
+(We seek to identify potential bearish setups by detecting the reversal Shooting Star candlestick pattern combined with the price trading above the 200-day moving average (MA200). The purpose of this step is not to generate short-selling trades but rather flag stocks that should be avoided for buying after identifying bullish hammer setups.)
+
+    import pandas as pd
+    import yfinance as yf
+    from typing import List
+    from datetime import datetime
+    import logging
+    from dotenv import load_dotenv
+    from contextlib import redirect_stdout
+    import os
+
+    from f_v1_basic import add_features_v1_basic
+    from derivative_columns.shooting_star import add_col_is_shooting_star
+    from derivative_columns.atr import add_tr_delta_col_to_ohlc
+
+    LOG_FILE = "app_run.log"
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(message)s",
+        filename=LOG_FILE,
+        encoding="utf-8",
+        filemode="a",
+     )
+
+    def fetch_ohlc_yfinance(ticker: str, start_date: str = "2020-01-01", end_date: str = "2025-04-06") -> pd.DataFrame:
+
+        try:
+            df = yf.Ticker(ticker).history(start=start_date, end=end_date, interval="1d")
+            if df.empty:
+                logging.error(f"No data fetched for {ticker}")
+                return pd.DataFrame()
+        
+            df = df[["Open", "High", "Low", "Close", "Volume"]]
+            df.index = pd.to_datetime(df.index).tz_localize(None)  # Remove timezone
+            logging.debug(f"Fetched {len(df)} rows for {ticker}")
+            return df
+        except Exception as e:
+            logging.error(f"Error fetching data for {ticker}: {str(e)}")
+            return pd.DataFrame()
+
+    def generate_bearish_signals(tickers: List[str], start_date: str = "2020-01-01", end_date: str = "2025-04-06") -> pd.DataFrame:
+   
+        results = []
+    
+        with open(os.devnull, 'w') as devnull:
+            with redirect_stdout(devnull):
+                for ticker in tickers:
+                    logging.debug(f"Processing ticker: {ticker}")
+           
+                    df = fetch_ohlc_yfinance(ticker, start_date, end_date)
+                    if df.empty:
+                        logging.warning(f"Skipping {ticker} due to empty data")
+                        continue
+                
+                    df = add_features_v1_basic(df)
+                
+                    df = add_col_is_shooting_star(df)
+                    df = add_tr_delta_col_to_ohlc(df)
+                
+                    logging.debug(f"Data shape for {ticker}: {df.shape}")
+                    logging.debug(f"Columns for {ticker}: {list(df.columns)}")
+                
+                    nan_counts = df[['Close', 'ma_200', 'atr_14', 'tr_delta', 'is_shooting_star']].isna().sum()
+                    logging.debug(f"NaN counts for {ticker}:\n{nan_counts}")
+                
+                    df["Bearish_Signal"] = (
+                        (df["is_shooting_star"] == True) &  
+                        (df["Close"] > df["ma_200"]) &    
+                        (df["tr_delta"] < 3.0)             
+                    )
+                
+                    shooting_star_count = df["is_shooting_star"].sum()
+                    uptrend_count = (df["Close"] > df["ma_200"]).sum()
+                    volatility_count = (df["tr_delta"] < 3.0).sum()
+                    signal_count = df["Bearish_Signal"].sum()
+                    logging.debug(f"Shooting star count for {ticker}: {shooting_star_count}")
+                    logging.debug(f"Uptrend count (Close > ma_200) for {ticker}: {uptrend_count}")
+                    logging.debug(f"Volatility count (tr_delta < 3.0) for {ticker}: {volatility_count}")
+                    logging.debug(f"Bearish signal count for {ticker}: {signal_count}")
+                
+                    df.to_excel(f"debug_{ticker}_full_data.xlsx")
+                    logging.debug(f"Saved full data for {ticker} to debug_{ticker}_full_data.xlsx")
+                
+                    df_output = df[["Close", "ma_200", "atr_14", "tr_delta", "is_shooting_star", Bearish_Signal"]].copy()
+                    df_output["Ticker"] = ticker
+                    df_output["Date"] = df_output.index
+                    df_output["Distance_to_MA200"] = ((df["Close"] - df["ma_200"]) / df["atr_14"]).round(2)
+                    df_output = df_output[["Ticker", "Date", "Close", "ma_200", "atr_14", "tr_delta", "Distance_to_MA200", "is_shooting_star", "Bearish_Signal"]]
+                
+                    results.append(df_output[df_output["Bearish_Signal"] == True])
+    
+        result_df = pd.concat(results) if results else pd.DataFrame(
+            columns=["Ticker", "Date", "Close", "ma_200", "atr_14", "tr_delta", "Distance_to_MA200", "is_shooting_star", "Bearish_Signal"]
+        )
+    
+        result_df[["Close", "ma_200", "atr_14", "tr_delta"]] = result_df[["Close", "ma_200", "atr_14", "tr_delta"]].round(2)
+
+        output_file = "bearish_signals.xlsx"
+        result_df.to_excel(output_file, index=False)
+        logging.debug(f"Bearish signals saved to {output_file}")
+    
+        return result_df
+
+    if __name__ == "__main__":
+        load_dotenv()
+    
+        open(LOG_FILE, "w", encoding="utf-8").close()
+    
+        custom_tickers = ["SPY", "QQQ", "AAPL", "TSLA"]
+    
+        bearish_signals_df = generate_bearish_signals(tickers=custom_tickers)
+
+        pd.set_option('display.width', 1000)
+        pd.set_option('display.max_columns', None)
+
+        print(f"Generated bearish signals for {len(custom_tickers)} tickers.")
+        print(f"Total signals: {len(bearish_signals_df)}")
+        print(f"Results saved to bearish_signals.xlsx")
+        if not bearish_signals_df.empty:
+            print("\nSample of bearish signals:")
+            print(bearish_signals_df.head())
+
+
+Explanation
+
+The objective of this step is to generate bearish signals by detecting potential reversal points using the shooting star candlestick pattern in an uptrend, filtered by trend and volatility conditions. The shooting star pattern is identified when is_shooting_star == True, with an uptrend filter where the price is above the 200-day moving average (Close > ma_200). The volatility filter ensures that the True Range delta (tr_delta) is below 2.5 for moderate volatility. Additionally, an optional condition checks if the price is significantly above the 200-day MA ((Close - ma_200) >= (atr_14 * 6)). The output is saved in a DataFrame (bearish_signals.xlsx) with columns for Ticker, Date, Close, MA200, ATR_14, TR_Delta, Is_Shooting_Star, and Bearish_Signal, helping traders identify stocks to avoid buying at potential peaks or consider for short positions. This approach focuses on real-time monitoring without backtesting.
+
 # ANCHORED VOLUME WEIGHTED AVERAGE PRICES (VWAPS)
 
 This systematic trading strategy utilizes Anchored VWAPs to identify trends, support and resistance levels, and optimal entry and exit points. Primarily designed for daily (1d) swing trading, it can also be adapted for intraday timeframes like 15-minute or 5-minute charts. The strategy focuses on stocks and ETFs, incorporating key indicators such as Anchored VWAPs, the Average True Range (ATR), significant price levels, and a 5-day Simple Moving Average (SMA). Anchored VWAP, a powerful tool in technical analysis, calculates the volume-weighted average price of an asset from a specific anchor point, such as key highs, lows, or market events, offering dynamic support and resistance levels. It is computed as the cumulative sum of the Typical Price (Open + High + Low + Close)/4 multiplied by volume, divided by total volume. This approach helps confirm trends, identify support and resistance zones, and generate trade signals based on price interactions with VWAP levels. The provided code framework efficiently fetches OHLC data, computes Anchored VWAPs, detects significant price levels, and visualizes them, ensuring a systematic and repeatable trading process.
