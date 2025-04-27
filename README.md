@@ -178,6 +178,8 @@ We replace missing values with the mean of non-misssing values for each metric. 
 
 We compute percentile ranks for each metric using scipy.stats.percentileofscore. The RV Score is the average of the valuation metrics, with lower scores indicating better value, and the average of the momentum metrics, with higher scores indicating higher quality momentum. We sort by RV Score, select the top stocks, and reset the index. Combining these steps aligns the analytical focus on ranking and filtering.
 
+The quantitative value and momentum factor strategy is designed to identify and capitalize on two distinct market inefficiencies: undervaluation (via the value factor) and price trends (via the momentum factor). The screener aims to buy low (cheap) value stocks, sell high (expensive) value stocks, buy high positive momentum stocks, and sell low negative momentum stocks. .
+
 # PYTHON BACKTESTING: TREND-ALIGNED REVERSAL STRATEGY WITH VOLATILITY AND RISK MANAGEMENT FILTERS  
 
 This strategy identifies potential bullish reversals using the hammer candlestick pattern, filtered by the asset's position relative to its 200-day moving average and volatility conditions measured by the Average True Range. It aims to enter long positions when a hammer candle forms under specific conditions and manage risk with stop-losses, profit-targets, and specific situation handling. The approach is backtested across multiple tickers to ensure robustness, reflecting Amare Capital Management's commitment to rigorous statistical validation.
