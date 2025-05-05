@@ -2,7 +2,7 @@
 
 Kabelo Junior Mosaka is a Registered Securities Trader with the South African Institute of Financial Markets. He specializes in the systematic trading of stock derivatives, particularly Contracts for Difference (CFDs), using quantitative strategies rooted in rigorous statistical analysis and robust backtesting. Kabelo develops and refines his trading models using a Python-based framework to uncover and exploit market inefficiencies. He is currently pursuing a Bachelor of Commerce in Finance at the University of the Free State and plans to conclude his academic journey with a Postgraduate Diploma in Finance at the University of the Witwatersrand. Deeply passionate about financial markets, Kabelo aspires to work for proprietary trading firms and hedge funds, especially within the buy-side industry.
 
-   ![ACM color](https://github.com/user-attachments/assets/20d58686-3b6e-4868-b38b-b55d12619c32)
+![ACM](https://github.com/user-attachments/assets/24775362-724c-48c8-a5ed-55a76aabc5ca)
 
 # QUANTITATIVE VALUE AND MOMENTUM FACTOR STRATEGY
 
