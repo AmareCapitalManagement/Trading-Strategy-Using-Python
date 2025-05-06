@@ -1,6 +1,6 @@
 # Trading-Strategy-Using-Python
 
-Kabelo Junior Mosaka is a Registered Securities Trader with the South African Institute of Financial Markets. He specializes in the systematic trading of stock derivatives, particularly Contracts for Difference (CFDs), using quantitative strategies rooted in rigorous statistical analysis and robust backtesting. Kabelo develops and refines his trading models using a Python-based framework to uncover and exploit market inefficiencies. He is currently pursuing a Bachelor of Commerce in Finance at the University of the Free State (UFS). Deeply passionate about financial markets, Kabelo aspires to work for proprietary trading firms and hedge funds, especially within the buy-side industry.
+Kabelo Junior Mosaka is a Registered Securities Trader with the South African Institute of Financial Markets. He specializes in the systematic trading of stock derivatives, particularly Contracts for Difference (CFDs), using quantitative strategies rooted in rigorous statistical analysis and robust backtesting. Kabelo develops and refines his trading models using a Python-based framework to uncover and exploit market inefficiencies. He is currently pursuing a Bachelor of Commerce in Finance at the University of the Free State (UFS). Deeply passionate about financial markets, Kabelo aspires to work for proprietary trading firms and hedge funds.
 
 ![ALGORITHMIC TRADING](https://github.com/user-attachments/assets/56dcdc86-b4d3-4252-8ca5-9956f609d742)
 
