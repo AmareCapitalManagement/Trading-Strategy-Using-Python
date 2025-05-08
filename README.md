@@ -1,8 +1,8 @@
 # Trading-Strategy-Using-Python
 
-Kabelo Junior Mosaka is a Registered Securities Trader with the South African Institute of Financial Markets. He specializes in the systematic trading of stock derivatives, particularly Contracts for Difference (CFDs), using quantitative strategies rooted in rigorous statistical analysis and robust backtesting. Kabelo develops and refines his trading models using a Python-based framework to uncover and exploit market inefficiencies. He is currently pursuing a Bachelor of Commerce in Finance at the University of the Free State (UFS). 
+Amare Capital Management (Pty) Ltd is a systematic proprietary trading firm specializing in trading stock derivatives, specifically Contracts for Difference (CFDs). We are committed to developing and refining quantitative trading strategies through rigorous statistical analysis and robust backtesting. Our approach focuses on simplifying and enhancing strategy performance, leveraging a Python-based framework to systematically identify and capitalize on market opportunities. Kabelo Junior Mosaka, the founder and CEO of Amare Capital Management, is a Registered Securities Trader with the South African Institute of Financial Markets and is currently pursuing a Bachelor of Commerce in Finance at the University of the Free State (UFS). 
 
-![ALGORITHMIC TRADING](https://github.com/user-attachments/assets/56dcdc86-b4d3-4252-8ca5-9956f609d742)
+   ![ACM w color](https://github.com/user-attachments/assets/3a561d79-99e0-45b0-afe0-b204a6f5a45a)
 
 # QUANTITATIVE VALUE AND MOMENTUM FACTOR STRATEGY
 
@@ -853,8 +853,10 @@ The reason for integrating intraday tools such as SMA, volume profiles, relative
 
 # CONCLUSION
 
-Kabelo Junior Mosaka has developed a disciplined, data-driven trading framework centered on a combination of mean-reversion and trend-following strategies. His approach integrates deep value metrics—such as P/E, P/B, P/S, EV/EBITDA, and EV/GP—with strong, high-quality momentum signals across multiple timeframes (1-month to 1-year) to uncover undervalued stocks with high potential for outperformance.
+Amare Capital Management has built a disciplined, data-driven trading framework centered on a mean-reversion and trend-following strategy. This approach combines deep value metrics—such as P/E, P/B, P/S, EV/EBITDA, and EV/GP—with strong, high-quality momentum across multiple timeframes (1-month to 1-year) to identify undervalued stocks poised for outperformance.
 
-He also employs two proprietary systematic trading strategies: the Hammer Reversal with Volatility Filter and the Anchored VWAP approach. The Hammer Reversal strategy targets bullish reversal setups using candlestick analysis, volatility filters, and strict risk management protocols, all supported by robust backtesting. The Anchored VWAP strategy strengthens trend identification and trade execution by utilizing dynamic support and resistance levels, along with intraday tools for real-time adaptability.
+Complementing this, the firm employs two systematic trading strategies: the Hammer Reversal with Volatility Filter and the Anchored VWAP approach. The Hammer Reversal strategy captures bullish reversal setups using candlestick analysis, volatility filters, and strict risk protocols, validated through extensive backtesting. The Anchored VWAP strategy enhances trend detection and execution through dynamic support/resistance levels and intraday tools for real-time adaptability.
 
-Together, these strategies embody Kabelo’s commitment to systematic, evidence-based trading adaptable to diverse market conditions.
+Together, these strategies reflect Amare Capital Management’s commitment to consistent, evidence-based trading across diverse market conditions.
+
+
