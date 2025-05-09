@@ -1,6 +1,8 @@
 # Trading-Strategy-Using-Python
 
-Amare Capital Management (Pty) Ltd is a systematic proprietary trading firm specializing in trading stock derivatives, specifically Contracts for Difference (CFDs). We are committed to developing and refining quantitative trading strategies through rigorous statistical analysis and robust backtesting. Our approach focuses on simplifying and enhancing strategy performance, leveraging a Python-based framework to systematically identify and capitalize on market opportunities. Kabelo Junior Mosaka, the founder and CEO of Amare Capital Management, is a Registered Securities Trader with the South African Institute of Financial Markets and is currently pursuing a Bachelor of Commerce in Finance at the University of the Free State (UFS). 
+Amare Capital Management (Pty) Ltd is a systematic proprietary trading firm specializing in trading stock derivatives, specifically Contracts for Difference (CFDs). We are committed to developing and refining quantitative trading strategies through rigorous statistical analysis and robust backtesting. Our approach focuses on simplifying and enhancing strategy performance, leveraging a Python-based framework to systematically identify and capitalize on market opportunities. 
+
+Kabelo Junior Mosaka, the founder and CEO of Amare Capital Management, is a Registered Securities Trader with the South African Institute of Financial Markets and is currently pursuing a Bachelor of Commerce in Finance at the University of the Free State (UFS). 
 
    ![ACM w color](https://github.com/user-attachments/assets/3a561d79-99e0-45b0-afe0-b204a6f5a45a)
 
