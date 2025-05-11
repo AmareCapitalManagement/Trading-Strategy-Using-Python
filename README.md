@@ -844,13 +844,3 @@ This step runs the VWAP-based strategy and prints a clear, date-stamped trade su
 Explanation
 
 The reason for integrating intraday tools such as SMA, volume profiles, relative strength ratios, and quick charting features is to enrich the daily trading strategy with more granular, real-time insights into market conditions. By incorporating these elements, traders can monitor price movements and trends more effectively within the day, allowing for better short-term decision-making. The use of intraday VWAP and other indicators helps identify key price levels and trends during trading hours, enhancing the strategy’s accuracy.
-
-# CONCLUSION
-
-Amare Capital Management has built a disciplined, data-driven trading framework centered on a mean-reversion and trend-following strategy. This approach combines deep value metrics—such as P/E, P/B, P/S, EV/EBITDA, and EV/GP with strong, high-quality momentum across multiple timeframes (1-month to 1-year) to identify undervalued/overvalued stocks poised for outperformance.
-
-Complementing this, the firm employs two systematic trading strategies: the Hammer Reversal with Volatility Filter and the Anchored VWAP approach. The Hammer Reversal strategy captures bullish reversal setups using candlestick analysis, volatility filters, and strict risk protocols, validated through extensive backtesting. The Anchored VWAP strategy enhances trend detection and execution through dynamic support/resistance levels and intraday tools for real-time adaptability.
-
-Together, these strategies reflect Amare Capital Management’s commitment to consistent, evidence-based trading across diverse market conditions.
-
-
