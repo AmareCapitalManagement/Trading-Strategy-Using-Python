@@ -1,11 +1,3 @@
-# Trading-Strategy-Using-Python
-
-Amare Capital Management (Pty) Ltd is a systematic proprietary trading firm specializing in trading stock derivatives, specifically Contracts for Difference (CFDs). We are committed to developing and refining quantitative trading strategies through rigorous statistical analysis and robust backtesting. Our approach focuses on simplifying and enhancing strategy performance, leveraging a Python-based framework to systematically identify and capitalize on market opportunities. 
-
-Kabelo Junior Mosaka, the founder and CEO of Amare Capital Management, is a Registered Securities Trader with the South African Institute of Financial Markets and is currently pursuing a Bachelor of Commerce in Finance at the University of the Free State (UFS). 
-
-   ![ACM w color](https://github.com/user-attachments/assets/3a561d79-99e0-45b0-afe0-b204a6f5a45a)
-
 # QUANTITATIVE VALUE AND MOMENTUM FACTOR STRATEGY
 
 Value factor identifies stocks trading below their intrinsic value, using metrics like price-to-earnings (P/E), price-to-book (P/B), price-to-sales (P/S), enterprise value to EBITDA (EV/EBITDA), and enterprise value to gross profit (EV/GP). These metrics evaluate a stock's price relative to earnings, assets, sales, or profitability. Momentum factor focuses on stocks with the highest recent price momentum, assuming that stocks that have been performing well recently will continue to perform well in the short-term. This strategy targets stocks with the lowest valuation metrics, assuming they are undervalued and likely to outperform and exhibit strong, high-quality momentum across varios timeframes (1-month, 3-months, 6-months, and 1-year)
