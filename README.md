@@ -844,3 +844,7 @@ This step runs the VWAP-based strategy and prints a clear, date-stamped trade su
 Explanation
 
 The reason for integrating intraday tools such as SMA, volume profiles, relative strength ratios, and quick charting features is to enrich the daily trading strategy with more granular, real-time insights into market conditions. By incorporating these elements, traders can monitor price movements and trends more effectively within the day, allowing for better short-term decision-making. The use of intraday VWAP and other indicators helps identify key price levels and trends during trading hours, enhancing the strategy’s accuracy.
+
+#EWMAC TREND-FOLLOWING STRATEGY 
+
+
