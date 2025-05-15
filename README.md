@@ -847,4 +847,70 @@ The reason for integrating intraday tools such as SMA, volume profiles, relative
 
 # EWMAC TREND-FOLLOWING STRATEGY 
 
+The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-following trading rule that captures momentum in asset prices using only price data. It compares fast and slow EWMA of the price to detect trends: when the fast EWMA is above the slow EWMA, it signals an uptrend (go long), and when the fast EWMA is below the slow EWMA, it signals a downtrend (go short). The raw signal is adjusted for volatility and scaled to reflect forecast strength, then capped to limit extremes. This simple systematic approach is backed by both empirical performance and behavioral finance theory, making it a robust and explainable trading strategy.
 
+    import yfinance as yf
+    import pandas as pd
+    import numpy as np 
+    import matplotlib.pyplot as plt 
+    from datetime import datetime 
+
+    ticker = "TSLA"
+    start_date = "2024-01-01"
+    end_date = "2025-05-15"
+
+    Lfast = 16 
+    Lslow = 4 * Lfast 
+    vol_lookback = 25 
+    capmin = -20 
+    capmax = 20 
+
+    data = yf.download(ticker, start=start_date, end=end_date)
+    price = data['Adj Close'].dropna()
+
+    fast_ewma = price.ewm(span=Lfast).mean()
+    slow_ewma = price.ewm(span=Lslow).mean()
+    raw_ewmac = fast_ewma - slow_ewma 
+
+    returns = price.pct_change()
+    vol = returns.ewm(span=vol_lookback).std()
+    vol_adj_ewmac = raw_ewmac / vol 
+
+    def ewmac_forecast_scalar(Lfast, Lslow):
+        return 10 / np.sqrt(Lfast)
+
+    f_scalar = ewmac_forecast_scalar(Lfast, Lslow)
+    forecast = vol_adj_ewmac * f_scalar 
+
+    cap_forecast = forecast.clip(lower=capmin, upper=capmax)
+
+    plt.figure(figsize=(14,7))
+    plt.plot(price, label='Price', color='black')
+    plt.plot(fast_ewma, label=f'Fast EWMA ({Lfast})', linestyle='--')
+    plt.plot(slow_ewma, label=f'Slow EWMA ({Lslow})', linestyle='--')
+    plt.title(f"EWMAC Crossover Strategy: {ticker}")
+    plt.xlabel("Date")
+    plt.ylabel("Price")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig("ewmac_crossover.png")
+    plt.show()
+    
+    plt.figure(figsize=(14, 5))
+    plt.plot(cap_forecast, label='Capped Forecast Signal')
+    plt.title(f"Capped EWMAC Forecast Signal: {ticker}")
+    plt.xlabel("Date")
+    plt.ylabel("Forecast Value")
+    plt.axhline(10, color='green', linestyle='--', label='Buy Threshold')
+    plt.axhline(-10, color='red', linestyle='--', label='Sell Threshold')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+**Explanation**
+
+The Exponentially Weighted Moving Average Crossover (EWMAC) strategy is a robust and intuitive trend-following trading rule that captures medium- to long-term momentum in asset prices. By comparing a fast-moving average to a slow-moving average, the strategy identifies directional trends: it generates buy signals when prices are trending upward (fast MA > slow MA) and sell signals during downtrends (fast MA < slow MA).
+
+The result is a dynamic signal that is responsive to trends, adaptive to volatility, and simple to implement, making it an ideal component of a systematic trading strategy. Its strength lies not only in its performance but also in its behavioral justification, simplicity, and positive skewness — offering large potential gains during strong market trends while limiting losses in range-bound periods.
