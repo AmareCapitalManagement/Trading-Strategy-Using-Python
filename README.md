@@ -157,16 +157,26 @@ We replace missing values with the mean of non-misssing values for each metric. 
     combined_df['Value Score'] = combined_df[list(value_metrics.values())].mean(axis=1)
     combined_df['Momentum Score'] = combined_df[list(momentum_metrics.values())].mean(axis=1)
 
-    top_value_stocks = combined_df.sort_values('Value Score').head(9).reset_index(drop=True)
-    top_momentum_stocks = combined_df.sort_values('Momentum Score', ascending=False).head(9).reset_index(drop=True)
+    value_buy_thresh = combined_df['Value Score'].quantile(0.2)
+    value_sell_thresh = combined_df['Value Score'].quantile(0.8)
+    momentum_buy_thresh = combined_df['Momentum Score'].quantile(0.8)
+    momentum_sell_thresh = combined_df['Momentum Score'].quantile(0.2)
 
-    final_df = combined_df[['Ticker', 'Value Score', 'Momentum Score']]
+    combined_df['Value Signal'] = combined_df['Value Score'].apply(
+        lambda x: 'BUY' if x <= value_buy_thresh else ('SELL' if x >= value_sell_thresh else 'HOLD')
+    )
 
-    final_df.sort_values(by='Value Score', ascending=True, inplace=True)
+    combined_df['Momentum Signal'] = combined_df['Momentum Score'].apply(
+        lambda x: 'BUY' if x >= momentum_buy_thresh else ('SELL' if x <= momentum_sell_thresh else 'HOLD')
+    )
+
+    final_df = combined_df[['Ticker', 'Value Score', 'Value Signal', 'Momentum Score', 'Momentum Signal']]
+    final_df.sort_values(by='Ticker', inplace=True)
     final_df.reset_index(drop=True, inplace=True)
 
-    print(final_df)
-
+    pd.set_option('display.max_rows', None)
+    print(final_df)                                                      
+                                                           
 **Explanation**
 
 We compute percentile ranks for each metric using scipy.stats.percentileofscore. The RV Score is the average of the valuation metrics, with lower scores indicating better value, and the average of the momentum metrics, with higher scores indicating higher quality momentum. We sort by RV Score, select the top stocks, and reset the index. Combining these steps aligns the analytical focus on ranking and filtering.
@@ -581,7 +591,8 @@ SQN_modified is devoid of this drawback. It is simply the average of trade profi
     
         open(LOG_FILE, "w", encoding="utf-8").close()
     
-        custom_tickers = ["SPY", "QQQ", "AAPL", "TSLA"]
+        custom_tickers = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+    
     
         bearish_signals_df = generate_bearish_signals(tickers=custom_tickers)
 
@@ -630,12 +641,13 @@ This systematic trading strategy utilizes Anchored VWAPs to identify trends, sup
         print(df[["Open", "High", "Low", "Close", "Volume", f"atr_{ATR_SMOOTHING_N}", "is_min", "is_max"]].tail())
         return df
     
-    ticker = "AAPL"
-    df = prepare_data(ticker)
-
     ticker_data = {}
-    if not df.empty:
-       ticker_data[ticker] = df 
+    tickers = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+
+    for ticker in tickers: 
+        df = prepare_data(ticker)
+        if not df.empty:
+            ticker_data[ticker] = df 
 
 Explanation
 
@@ -662,9 +674,11 @@ The code fetches two years of daily OHLCV data for the ticker using the get_ohlc
         print(f"Anchor dates for {df.attrs.get('ticker', 'unknown')}: {anchor_dates}")
         return anchor_dates
         
-    anchor_dates_dict = {}
-    anchor_dates_dict[ticker] = get_anchor_dates(ticker_data[ticker])
-
+    anchor_dates_dict = {
+        ticker: get_anchor_dates(df.assign(attrs={"ticker": ticker}))
+        for ticker, df in ticker_data.items()
+    }
+    
 Explanation
 
 The code creates a list of anchor dates for a specific stock ticker, starting with the fixed baseline date, first_day_of_year. It then adds custom_dates (such as earning reports, price peaks, and market corrections), and incorporates the most recent min/max dates from the stock's price history defined in prepare data function. The anchored dates are stored in a dictionary, providing a set of key reference points for further analysis, like VWAP calculations or trading signals. Custom dates are chosen to reflect significant events, such as earning reports or major price movements, which help us traders make data-driven decisions. The code automates the process of adding these anchor points, ensuring they align with key market events, while offering flexibiity for our strategies.
@@ -836,9 +850,7 @@ This step runs the VWAP-based strategy and prints a clear, date-stamped trade su
             print_df=False
        )
        print(f"{ticker}: Intraday VWAP image generated")
-
-       print(f"{ticker}: Close-to-Close ratio image generated")
-       draw_ratio(ticker_1=ticker, ticker_2="MSFT", cutoff_date="2020-01-01")    
+       
        plt.close()
 
 Explanation
@@ -855,9 +867,15 @@ The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-
     import matplotlib.pyplot as plt 
     from datetime import datetime 
 
-    ticker = "TSLA"
+    tickers = ["ABG.JO", "AEL.JO", "AFT.JO", "AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO",
+           "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO",
+           "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO",
+           "NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO",
+           "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO",
+           "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+  
     start_date = "2024-01-01"
-    end_date = "2025-05-15"
+    end_date = "2025-06-02"
 
     Lfast = 16 
     Lslow = 4 * Lfast 
@@ -865,49 +883,60 @@ The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-
     capmin = -20 
     capmax = 20 
 
-    data = yf.download(ticker, start=start_date, end=end_date)
-    price = data['Adj Close'].dropna()
-
-    fast_ewma = price.ewm(span=Lfast).mean()
-    slow_ewma = price.ewm(span=Lslow).mean()
-    raw_ewmac = fast_ewma - slow_ewma 
-
-    returns = price.pct_change()
-    vol = returns.ewm(span=vol_lookback).std()
-    vol_adj_ewmac = raw_ewmac / vol 
-
     def ewmac_forecast_scalar(Lfast, Lslow):
         return 10 / np.sqrt(Lfast)
 
     f_scalar = ewmac_forecast_scalar(Lfast, Lslow)
-    forecast = vol_adj_ewmac * f_scalar 
 
-    cap_forecast = forecast.clip(lower=capmin, upper=capmax)
+    data = yf.download(tickers, start=start_date, end=end_date)
 
-    plt.figure(figsize=(14,7))
-    plt.plot(price, label='Price', color='black')
-    plt.plot(fast_ewma, label=f'Fast EWMA ({Lfast})', linestyle='--')
-    plt.plot(slow_ewma, label=f'Slow EWMA ({Lslow})', linestyle='--')
-    plt.title(f"EWMAC Crossover Strategy: {ticker}")
-    plt.xlabel("Date")
-    plt.ylabel("Price")
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.savefig("ewmac_crossover.png")
-    plt.show()
-    
-    plt.figure(figsize=(14, 5))
-    plt.plot(cap_forecast, label='Capped Forecast Signal')
-    plt.title(f"Capped EWMAC Forecast Signal: {ticker}")
-    plt.xlabel("Date")
-    plt.ylabel("Forecast Value")
-    plt.axhline(10, color='green', linestyle='--', label='Buy Threshold')
-    plt.axhline(-10, color='red', linestyle='--', label='Sell Threshold')
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
+    for ticker in tickers:
+        try:
+            price = data["Close"][ticker].dropna()
+
+        if price.empty:
+            print(f"No data for {ticker}. Skipping...")
+            continue
+            
+        fast_ewma = price.ewm(span=Lfast).mean()
+        slow_ewma = price.ewm(span=Lslow).mean()
+        raw_ewmac = fast_ewma - slow_ewma
+
+        returns = price.pct_change()
+        vol = returns.ewm(span=vol_lookback).std()
+        vol_adj_ewmac = raw_ewmac / vol
+
+        forecast = vol_adj_ewmac * f_scalar
+        cap_forecast = forecast.clip(lower=capmin, upper=capmax)
+
+        fig, axs = plt.subplots(1, 2, figsize=(18, 6))
+
+        axs[0].plot(price, label='Price', color='black')
+        axs[0].plot(fast_ewma, label=f'Fast EWMA ({Lfast})', linestyle='--')
+        axs[0].plot(slow_ewma, label=f'Slow EWMA ({Lslow})', linestyle='--')
+        axs[0].set_title(f"EWMAC Crossover\n{ticker}")
+        axs[0].set_xlabel("Date")
+        axs[0].set_ylabel("Price")
+        axs[0].legend()
+        axs[0].grid(True)
+        
+        axs[1].plot(cap_forecast, label='Capped Forecast Signal', color='blue')
+        axs[1].axhline(10, color='green', linestyle='--', label='Buy Threshold')
+        axs[1].axhline(-10, color='red', linestyle='--', label='Sell Threshold')
+        axs[1].set_title("Capped EWMAC Forecast Signal")
+        axs[1].set_xlabel("Date")
+        axs[1].set_ylabel("Forecast Value")
+        axs[1].legend()
+        axs[1].grid(True)
+
+        plt.tight_layout()
+        plt.savefig(f"{ticker}_ewmac_combined.png")
+        plt.close()
+
+        print(f" Saved: {ticker}_ewmac_combined.png")
+
+    except Exception as e:
+        print(f" Error with {ticker}: {e}")
 
 **Explanation**
 
