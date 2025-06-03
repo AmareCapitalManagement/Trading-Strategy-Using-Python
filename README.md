@@ -836,9 +836,12 @@ This step runs the VWAP-based strategy and prints a clear, date-stamped trade su
         draw_profile_of_data(ohlc_df=ticker_data[ticker], ticker=ticker)
         print(f"{ticker}: Price and Volume profile image generated")
     
-        intraday_df = get_ohlc_from_yf(ticker=ticker, period="5d", interval="1m")
-        intraday_df = add_atr_col_to_df(intraday_df, n=ATR_SMOOTHING_N, exponential=False)
+    GENERATE_INTRADAY_VWAP = False # We can toggle this to true if we want to re-enable it 
     
+    intraday_df = get_ohlc_from_yf(ticker=ticker, period="5d", interval="1m")
+    intraday_df = add_atr_col_to_df(intraday_df, n=ATR_SMOOTHING_N, exponential=False)
+
+    if GENERATE_INTRADAY_VWAP:
         vwaps_plot_build_save(
             input_df=intraday_df,
             anchor_dates=anchor_dates_dict[ticker],
@@ -848,10 +851,9 @@ This step runs the VWAP-based strategy and prints a clear, date-stamped trade su
             file_name=f"intraday_{ticker}.png",
             hide_extended_hours=True,
             print_df=False
-       )
-       print(f"{ticker}: Intraday VWAP image generated")
-       
-       plt.close()
+        )
+        print(f"{ticker}: Intraday VWAP image generated") 
+        plt.close()
 
 Explanation
 
