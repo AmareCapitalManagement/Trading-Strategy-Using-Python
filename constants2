@@ -42,7 +42,7 @@ DPS_MAIN_FLOW_YES = "DPS Main flow - yes"
 DPS_MAIN_FLOW_NO = "DPS Main flow - no"
 DPS_STUB = "DPS get_desired_current_position_size stub"
 
-tickers_all = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "
+tickers_all = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "
 
 tickers_precious = [
     "GLD",
