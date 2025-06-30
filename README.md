@@ -613,7 +613,7 @@ The objective of this step is to generate bearish signals by detecting potential
 
 # ANCHORED VOLUME WEIGHTED AVERAGE PRICES (VWAPS)
 
-This systematic trading strategy utilizes Anchored VWAPs to identify trends, support and resistance levels, and optimal entry and exit points. Primarily designed for daily (1d) swing trading, it can also be adapted for intraday timeframes like 15-minute or 5-minute charts. The strategy focuses on stocks and ETFs, incorporating key indicators such as Anchored VWAPs, the Average True Range (ATR), significant price levels, and a 5-day Simple Moving Average (SMA). Anchored VWAP, a powerful tool in technical analysis, calculates the volume-weighted average price of an asset from a specific anchor point, such as key highs, lows, or market events, offering dynamic support and resistance levels. It is computed as the cumulative sum of the Typical Price (Open + High + Low + Close)/4 multiplied by volume, divided by total volume. This approach helps confirm trends, identify support and resistance zones, and generate trade signals based on price interactions with VWAP levels. The provided code framework efficiently fetches OHLC data, computes Anchored VWAPs, detects significant price levels, and visualizes them, ensuring a systematic and repeatable trading process.
+This systematic investing strategy utilizes Anchored VWAPs to identify trends, support and resistance levels, and optimal entry and exit points. Primarily designed for daily (1d) swing trading, it can also be adapted for intraday timeframes like 15-minute or 5-minute charts. The strategy focuses on stocks and ETFs, incorporating key indicators such as Anchored VWAPs, the Average True Range (ATR), significant price levels, and a 5-day Simple Moving Average (SMA). Anchored VWAP, a powerful tool in technical analysis, calculates the volume-weighted average price of an asset from a specific anchor point, such as key highs, lows, or market events, offering dynamic support and resistance levels. It is computed as the cumulative sum of the Typical Price (Open + High + Low + Close)/4 multiplied by volume, divided by total volume. This approach helps confirm trends, identify support and resistance zones, and generate trade signals based on price interactions with VWAP levels. The provided code framework efficiently fetches OHLC data, computes Anchored VWAPs, detects significant price levels, and visualizes them, ensuring a systematic and repeatable trading process.
 
 **STEP 1: DATA PREPARATION**
 
@@ -683,7 +683,7 @@ Explanation
 
 The code creates a list of anchor dates for a specific stock ticker, starting with the fixed baseline date, first_day_of_year. It then adds custom_dates (such as earning reports, price peaks, and market corrections), and incorporates the most recent min/max dates from the stock's price history defined in prepare data function. The anchored dates are stored in a dictionary, providing a set of key reference points for further analysis, like VWAP calculations or trading signals. Custom dates are chosen to reflect significant events, such as earning reports or major price movements, which help us traders make data-driven decisions. The code automates the process of adding these anchor points, ensuring they align with key market events, while offering flexibiity for our strategies.
 
-**STEP 3: TRADING SIGNALS**
+**STEP 3: INVESTING SIGNALS**
 
 (Define systematic rule for trend identification, entries, exits, and risk management)
 
@@ -859,7 +859,7 @@ Explanation
 
 The reason for integrating intraday tools such as SMA, volume profiles, relative strength ratios, and quick charting features is to enrich the daily trading strategy with more granular, real-time insights into market conditions. By incorporating these elements, traders can monitor price movements and trends more effectively within the day, allowing for better short-term decision-making. The use of intraday VWAP and other indicators helps identify key price levels and trends during trading hours, enhancing the strategy’s accuracy.
 
-# EWMAC TREND-FOLLOWING STRATEGY 
+# EWMAC MOMENTUM STRATEGY 
 
 The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-following trading rule that captures momentum in asset prices using only price data. It compares fast and slow EWMA of the price to detect trends: when the fast EWMA is above the slow EWMA, it signals an uptrend (go long), and when the fast EWMA is below the slow EWMA, it signals a downtrend (go short). The raw signal is adjusted for volatility and scaled to reflect forecast strength, then capped to limit extremes. This simple systematic approach is backed by both empirical performance and behavioral finance theory, making it a robust and explainable trading strategy.
 
