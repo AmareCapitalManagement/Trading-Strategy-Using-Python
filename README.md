@@ -861,7 +861,7 @@ The reason for integrating intraday tools such as SMA, volume profiles, relative
 
 # EWMAC MOMENTUM STRATEGY 
 
-The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-following trading rule that captures momentum in asset prices using only price data. It compares fast and slow EWMA of the price to detect trends: when the fast EWMA is above the slow EWMA, it signals an uptrend (go long), and when the fast EWMA is below the slow EWMA, it signals a downtrend (go short). The raw signal is adjusted for volatility and scaled to reflect forecast strength, then capped to limit extremes. This simple systematic approach is backed by both empirical performance and behavioral finance theory, making it a robust and explainable trading strategy.
+The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-following trading rule that captures momentum in asset prices using only price data. It compares fast and slow EWMA of the price to detect trends: when the fast EWMA is above the slow EWMA, it signals an uptrend (go long), and when the fast EWMA is below the slow EWMA, it signals a downtrend (flag). The raw signal is adjusted for volatility and scaled to reflect forecast strength, then capped to limit extremes. This simple systematic approach is backed by both empirical performance and behavioral finance theory, making it a robust and explainable trading strategy.
 
     import yfinance as yf
     import pandas as pd
