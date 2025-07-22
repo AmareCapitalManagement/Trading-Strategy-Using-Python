@@ -17,7 +17,7 @@ Value factor identifies stocks trading below their intrinsic value, using metric
 
     warnings.filterwarnings("ignore")
 
-    stocks = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+    stocks = []
 
 **Explanation**
 
@@ -591,7 +591,7 @@ SQN_modified is devoid of this drawback. It is simply the average of trade profi
     
         open(LOG_FILE, "w", encoding="utf-8").close()
     
-        custom_tickers = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+        custom_tickers = []
     
     
         bearish_signals_df = generate_bearish_signals(tickers=custom_tickers)
@@ -642,7 +642,7 @@ This systematic investing strategy utilizes Anchored VWAPs to identify trends, s
         return df
     
     ticker_data = {}
-    tickers = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+    tickers = []
 
     for ticker in tickers: 
         df = prepare_data(ticker)
@@ -869,12 +869,7 @@ The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-
     import matplotlib.pyplot as plt 
     from datetime import datetime 
 
-    tickers = ["ABG.JO", "AEL.JO", "AFT.JO", "AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO",
-           "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO",
-           "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO",
-           "NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO",
-           "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO",
-           "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+    tickers = []
   
     start_date = "2024-01-01"
     end_date = "2025-06-02"
