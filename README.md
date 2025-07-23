@@ -17,7 +17,7 @@ Value factor identifies stocks trading below their intrinsic value, using metric
 
     warnings.filterwarnings("ignore")
 
-    stocks = []
+    stocks = ["4SI.JO", "ABG.JO", "APF.JO", "ACS.JO", "AIP.JO", "ADR.JO", "ADH.JO", "AFE.JO", "AON.JO", "AOO.JO", "ADW.JO", "AME.JO", "ARI.JO", "AFT.JO", " ACT.JO", "AHL.JO", "AFH.JO", "AEL.JO", "APH.JO", "AGL.JO", "ANG.JO", "ANH.JO", "ACL.JO", "ART.JO", "AHA.JO", "AHB.JO", "ASC.JO", "APN.JO", "ARA.JO", "ARL.JO", , "ATT.JO", "AEG.JO", "AVI.JO", "AYO.JO","BWN.JO", "BAW.JO", "BEL.JO", "BHG.JO", "BID.JO", "BVT.JO", "BLU.JO", "BCF.JO", "BOX.JO", "BAT.JO", "BIK.JO", "BRT.JO", "BRN.JO", "BTI.JO", "BYI.JO", "CAA.JO", "CAC.JO", "CGR.JO", "CCO.JO", "CTA.JO", "CPI.JO", "CSB.JO", "CVW.JO", "CAT.JO", "CHP.JO", "CMO.JO", "CLH.JO", "CLS,JO", "CLI.JO", "CMH.JO", "CFR.JO", "CND.JO", "CML.JO", "CKS.JO", "COH.JO", "DTC.JO", "DLT.JO", "DNB.JO", "DKR.JO", "DIB.JO", "DCP.JO", "DSY.JO",  "DRD.JO", "EMH.JO", "EMN.JO", "EPS.JO", "EEL.JO", "ELI.JO", "EMI.JO", "ENX.JO", "EOH.JO", "EPE.JO", "EQU.JO", "EUZ.JO", "EXP.JO", "EXX.JO", "FBR.JO", "FGL.JO", "FSR.JO", "FFB.JO", "GAI.JO", "GML.JO", "GLN.JO", "GTC.JO", "GLI.JO", "GFI.JO", "GPL.JO", "GND.JO', "GRT.JO", "HMN.JO", "HAR.JO", "HET.JO", "HIL.JO", "HCI.JO", "HPR.JO", "HDC.JO", "HUG.JO", "HLM.JO", "HYP.JO", "INP.JO', "IPF.JO", "IVT.JO", "ISA.JO", "ITE.JO", "JSE.JO", "JBL.JO", "KAL.JO", "KAP.JO", "KRO.JO", "KBO.JO", "KP2.JO", "KIO.JO", "LAB.JO", "LEW.JO", "LBR.JO", "LHC.JO', "LTE.JO", "MMP.JO", "MSP.JO", "MDI.JO", MCZ.JO", "MRF.JO", "MTA.JO", "MFL.JO", "MED.JO", "MRI.JO", "MTM.JO", "MNP.JO", "MTH.JO", "MPT.JO", "MTN.JO", "MTNZF.JO", "MCG.JO", "MUR.JO", "MST.JO", "NPK.JO", "NPN.JO", "NED.JO", "NRP.JO, "NT1.JO", "NCS.JO", NY1.JO", "N91.JO", "NPH.JO", "NHM.JO", "NVS.JO", "NWL.JO", "OAO.JO", "OAS.JO", "OCE.JO", "OCT.JO", "OMU.JO", "OMN.JO', "ORN.JO", "OUT.JO", "PAN.JO", "PBG.JO", "PPH.JO", "PIK.JO", "PPC.JO", "PMR.JO", "PMV.JO", "PRX.JO", "KST.JO", "PSV.JO", "PPE.JO", "PPR.JO", "QFH.JO", "QLT.JO", "RBO.JO", "RMI.JO", "RNG.JO", "RBX.JO", "RCL.JO", "RDF.JO", "RNI.JO", "REM.JO", "REN.JO", "RES.JO", "RLO.JO", "RTO.JO", "RTN.JO", "RFG.JO", "RHB.JO", "RMH.JO", "SAC.JO", "SBP.JO", "SAR.JO', "SLM.JO", "SNT.JO", "SNV.JO", "SAP.JO", "SOL.JO", "SOLBE1.JO", "SCD.JO", "SHG.JO", "SEB.JO", "SEP.JO", "SHP.JO", "SSW.JO", 'SRE.JO", "SOH.JO", "S32.JO", "SDL.JO", "SPP.JO", "SEA.JO", "SUR.JO", "SDP.JO", "SSK.JO", "SSS.JO", "SUI.JO", "SPG.JO", "SRI.JO", "SYG.JO", "TLM.JO", "TKG.JO", "TEX.JO", "THA.JO", "TFG.JO", "TGA.JO", "TBS.JO", "TON.JO", "TDH.JO", "TCP.JO", "TPC.JO", "TRL.JO", "TMT.JO", "TRE.JO', "TTO.JO", "TRU.JO", "TSG.JO', "UPL.JO", "VAL.JO', "VIS.JO", "VOD.JO", "VKE.JO", "VUN.JO', "WBC.JO", "WSL.JP", "WEZ.JO", "WBO.JO", "WHL.JO", "YYLBEE.JO", "YRK.JO", "ZZD.JO", "ZED.JO"] 
 
 **Explanation**
 
@@ -27,17 +27,21 @@ We use numpy for calculations, pandas for data handling, yfinance for Yahoo Fina
 
 (Valueation metrics (P/E, P/B, P/S, EV/EBIT, EV/EBITDA, EV/GP) are critical for identifying value stocks, and momentum metrics (1-M, 3-M, 6-M, 12-M) for identifying trending stocks. A DataFrame organizes these metrics for analysis, enabling ranking and filtering)
 
+    from IPython.display import display
     def get_valuation_ratios(ticker):
         stock = yf.Ticker(ticker)
         info = stock.info
 
         try:
             name = info.get('shortName', 'N/A')
-            price = info.get('currentPrice', np.nan)
+            sector = info.get('sector', 'N/A')
+            price_cents = info.get('currentPrice', np.nan)
+            price = price_cents / 100 if not np.isnan(price_cents) else np.nan
+            price_str = f"R{price:,.2f}" if not np.isnan(price) else 'N/A'
             pe_ratio = info.get('trailingPE', np.nan)
             pb_ratio = info.get('priceToBook', np.nan)
 
-            if pb_ratio == np.nan:
+            if np.isnan(pb_ratio):
                 print(f"P/B is missing for {ticker}")
         
             ps_ratio = info.get('priceToSalesTrailing12Months', np.nan)
@@ -50,7 +54,9 @@ We use numpy for calculations, pandas for data handling, yfinance for Yahoo Fina
 
             return {
                 'Ticker': ticker,
-                'Price': price,
+                'Name': name,
+                'Sector': sector, 
+                'Price': price_str,
                 'P/E': pe_ratio,
                 'P/B': pb_ratio,
                 'P/S': ps_ratio,
@@ -62,7 +68,9 @@ We use numpy for calculations, pandas for data handling, yfinance for Yahoo Fina
           print(f"Error fetching ratios for {ticker}: {e}")
           return {
               'Ticker': ticker,
-              'Price': price,
+              'Name': 'N/A',
+              'Sector': 'N/A',
+              'Price': 'N/A',
               'P/E': np.nan,
               'P/B': np.nan,
               'P/S': np.nan,
@@ -95,7 +103,11 @@ We use numpy for calculations, pandas for data handling, yfinance for Yahoo Fina
 
     combined_df = pd.merge(value_df, momentum_df, left_on='Ticker', right_index=True)
     pd.set_option('display.max_columns', None)
-    print(combined_df)
+    pd.set_option('display.width', None)
+    display(combined_df)
+    
+    combined_df.to_excel("stock_valuation_momentum.xlsx", index=False)
+   
 
 **Explanation**
 
@@ -642,7 +654,7 @@ This systematic investing strategy utilizes Anchored VWAPs to identify trends, s
         return df
     
     ticker_data = {}
-    tickers = []
+    tickers = ["4SI.JO", "ABG.JO", "APF.JO", "ACS.JO", "AIP.JO", "ADR.JO", "ADH.JO", "AFE.JO", "AON.JO", "AOO.JO", "ADW.JO", "AME.JO", "ARI.JO", "AFT.JO", " ACT.JO", "AHL.JO", "AFH.JO", "AEL.JO", "APH.JO", "AGL.JO", "ANG.JO", "ANH.JO", "ACL.JO", "ART.JO", "AHA.JO", "AHB.JO", "ASC.JO", "APN.JO", "ARA.JO", "ARL.JO", , "ATT.JO", "AEG.JO", "AVI.JO", "AYO.JO","BWN.JO", "BAW.JO", "BEL.JO", "BHG.JO", "BID.JO", "BVT.JO", "BLU.JO", "BCF.JO", "BOX.JO", "BAT.JO", "BIK.JO", "BRT.JO", "BRN.JO", "BTI.JO", "BYI.JO", "CAA.JO", "CAC.JO", "CGR.JO", "CCO.JO", "CTA.JO", "CPI.JO", "CSB.JO", "CVW.JO", "CAT.JO", "CHP.JO", "CMO.JO", "CLH.JO", "CLS,JO", "CLI.JO", "CMH.JO", "CFR.JO", "CND.JO", "CML.JO", "CKS.JO", "COH.JO", "DTC.JO", "DLT.JO", "DNB.JO", "DKR.JO", "DIB.JO", "DCP.JO", "DSY.JO",  "DRD.JO", "EMH.JO", "EMN.JO", "EPS.JO", "EEL.JO", "ELI.JO", "EMI.JO", "ENX.JO", "EOH.JO", "EPE.JO", "EQU.JO", "EUZ.JO", "EXP.JO", "EXX.JO", "FBR.JO", "FGL.JO", "FSR.JO", "FFB.JO", "GAI.JO", "GML.JO", "GLN.JO", "GTC.JO", "GLI.JO", "GFI.JO", "GPL.JO", "GND.JO', "GRT.JO", "HMN.JO", "HAR.JO", "HET.JO", "HIL.JO", "HCI.JO", "HPR.JO", "HDC.JO", "HUG.JO", "HLM.JO", "HYP.JO", "INP.JO', "IPF.JO", "IVT.JO", "ISA.JO", "ITE.JO", "JSE.JO", "JBL.JO", "KAL.JO", "KAP.JO", "KRO.JO", "KBO.JO", "KP2.JO", "KIO.JO", "LAB.JO", "LEW.JO", "LBR.JO", "LHC.JO', "LTE.JO", "MMP.JO", "MSP.JO", "MDI.JO", MCZ.JO", "MRF.JO", "MTA.JO", "MFL.JO", "MED.JO", "MRI.JO", "MTM.JO", "MNP.JO", "MTH.JO", "MPT.JO", "MTN.JO", "MTNZF.JO", "MCG.JO", "MUR.JO", "MST.JO", "NPK.JO", "NPN.JO", "NED.JO", "NRP.JO, "NT1.JO", "NCS.JO", NY1.JO", "N91.JO", "NPH.JO", "NHM.JO", "NVS.JO", "NWL.JO", "OAO.JO", "OAS.JO", "OCE.JO", "OCT.JO", "OMU.JO", "OMN.JO', "ORN.JO", "OUT.JO", "PAN.JO", "PBG.JO", "PPH.JO", "PIK.JO", "PPC.JO", "PMR.JO", "PMV.JO", "PRX.JO", "KST.JO", "PSV.JO", "PPE.JO", "PPR.JO", "QFH.JO", "QLT.JO", "RBO.JO", "RMI.JO", "RNG.JO", "RBX.JO", "RCL.JO", "RDF.JO", "RNI.JO", "REM.JO", "REN.JO", "RES.JO", "RLO.JO", "RTO.JO", "RTN.JO", "RFG.JO", "RHB.JO", "RMH.JO", "SAC.JO", "SBP.JO", "SAR.JO', "SLM.JO", "SNT.JO", "SNV.JO", "SAP.JO", "SOL.JO", "SOLBE1.JO", "SCD.JO", "SHG.JO", "SEB.JO", "SEP.JO", "SHP.JO", "SSW.JO", 'SRE.JO", "SOH.JO", "S32.JO", "SDL.JO", "SPP.JO", "SEA.JO", "SUR.JO", "SDP.JO", "SSK.JO", "SSS.JO", "SUI.JO", "SPG.JO", "SRI.JO", "SYG.JO", "TLM.JO", "TKG.JO", "TEX.JO", "THA.JO", "TFG.JO", "TGA.JO", "TBS.JO", "TON.JO", "TDH.JO", "TCP.JO", "TPC.JO", "TRL.JO", "TMT.JO", "TRE.JO', "TTO.JO", "TRU.JO", "TSG.JO', "UPL.JO", "VAL.JO', "VIS.JO", "VOD.JO", "VKE.JO", "VUN.JO', "WBC.JO", "WSL.JP", "WEZ.JO", "WBO.JO", "WHL.JO", "YYLBEE.JO", "YRK.JO", "ZZD.JO", "ZED.JO"]
 
     for ticker in tickers: 
         df = prepare_data(ticker)
@@ -869,7 +881,7 @@ The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-
     import matplotlib.pyplot as plt 
     from datetime import datetime 
 
-    tickers = []
+    tickers = ["4SI.JO", "ABG.JO", "APF.JO", "ACS.JO", "AIP.JO", "ADR.JO", "ADH.JO", "AFE.JO", "AON.JO", "AOO.JO", "ADW.JO", "AME.JO", "ARI.JO", "AFT.JO", " ACT.JO", "AHL.JO", "AFH.JO", "AEL.JO", "APH.JO", "AGL.JO", "ANG.JO", "ANH.JO", "ACL.JO", "ART.JO", "AHA.JO", "AHB.JO", "ASC.JO", "APN.JO", "ARA.JO", "ARL.JO", , "ATT.JO", "AEG.JO", "AVI.JO", "AYO.JO","BWN.JO", "BAW.JO", "BEL.JO", "BHG.JO", "BID.JO", "BVT.JO", "BLU.JO", "BCF.JO", "BOX.JO", "BAT.JO", "BIK.JO", "BRT.JO", "BRN.JO", "BTI.JO", "BYI.JO", "CAA.JO", "CAC.JO", "CGR.JO", "CCO.JO", "CTA.JO", "CPI.JO", "CSB.JO", "CVW.JO", "CAT.JO", "CHP.JO", "CMO.JO", "CLH.JO", "CLS,JO", "CLI.JO", "CMH.JO", "CFR.JO", "CND.JO", "CML.JO", "CKS.JO", "COH.JO", "DTC.JO", "DLT.JO", "DNB.JO", "DKR.JO", "DIB.JO", "DCP.JO", "DSY.JO",  "DRD.JO", "EMH.JO", "EMN.JO", "EPS.JO", "EEL.JO", "ELI.JO", "EMI.JO", "ENX.JO", "EOH.JO", "EPE.JO", "EQU.JO", "EUZ.JO", "EXP.JO", "EXX.JO", "FBR.JO", "FGL.JO", "FSR.JO", "FFB.JO", "GAI.JO", "GML.JO", "GLN.JO", "GTC.JO", "GLI.JO", "GFI.JO", "GPL.JO", "GND.JO', "GRT.JO", "HMN.JO", "HAR.JO", "HET.JO", "HIL.JO", "HCI.JO", "HPR.JO", "HDC.JO", "HUG.JO", "HLM.JO", "HYP.JO", "INP.JO', "IPF.JO", "IVT.JO", "ISA.JO", "ITE.JO", "JSE.JO", "JBL.JO", "KAL.JO", "KAP.JO", "KRO.JO", "KBO.JO", "KP2.JO", "KIO.JO", "LAB.JO", "LEW.JO", "LBR.JO", "LHC.JO', "LTE.JO", "MMP.JO", "MSP.JO", "MDI.JO", MCZ.JO", "MRF.JO", "MTA.JO", "MFL.JO", "MED.JO", "MRI.JO", "MTM.JO", "MNP.JO", "MTH.JO", "MPT.JO", "MTN.JO", "MTNZF.JO", "MCG.JO", "MUR.JO", "MST.JO", "NPK.JO", "NPN.JO", "NED.JO", "NRP.JO, "NT1.JO", "NCS.JO", NY1.JO", "N91.JO", "NPH.JO", "NHM.JO", "NVS.JO", "NWL.JO", "OAO.JO", "OAS.JO", "OCE.JO", "OCT.JO", "OMU.JO", "OMN.JO', "ORN.JO", "OUT.JO", "PAN.JO", "PBG.JO", "PPH.JO", "PIK.JO", "PPC.JO", "PMR.JO", "PMV.JO", "PRX.JO", "KST.JO", "PSV.JO", "PPE.JO", "PPR.JO", "QFH.JO", "QLT.JO", "RBO.JO", "RMI.JO", "RNG.JO", "RBX.JO", "RCL.JO", "RDF.JO", "RNI.JO", "REM.JO", "REN.JO", "RES.JO", "RLO.JO", "RTO.JO", "RTN.JO", "RFG.JO", "RHB.JO", "RMH.JO", "SAC.JO", "SBP.JO", "SAR.JO', "SLM.JO", "SNT.JO", "SNV.JO", "SAP.JO", "SOL.JO", "SOLBE1.JO", "SCD.JO", "SHG.JO", "SEB.JO", "SEP.JO", "SHP.JO", "SSW.JO", 'SRE.JO", "SOH.JO", "S32.JO", "SDL.JO", "SPP.JO", "SEA.JO", "SUR.JO", "SDP.JO", "SSK.JO", "SSS.JO", "SUI.JO", "SPG.JO", "SRI.JO", "SYG.JO", "TLM.JO", "TKG.JO", "TEX.JO", "THA.JO", "TFG.JO", "TGA.JO", "TBS.JO", "TON.JO", "TDH.JO", "TCP.JO", "TPC.JO", "TRL.JO", "TMT.JO", "TRE.JO', "TTO.JO", "TRU.JO", "TSG.JO', "UPL.JO", "VAL.JO', "VIS.JO", "VOD.JO", "VKE.JO", "VUN.JO', "WBC.JO", "WSL.JP", "WEZ.JO", "WBO.JO", "WHL.JO", "YYLBEE.JO", "YRK.JO", "ZZD.JO", "ZED.JO"]
   
     start_date = "2024-01-01"
     end_date = "2025-06-02"
