@@ -6,6 +6,9 @@ Value factor identifies stocks trading below their intrinsic value, using metric
 
 (Efficient data processing requires libraries for numerical computations, data manipulation, and financial data retrieval)
 
+    ```markdown
+    ```python
+    
     import numpy as np
     import pandas as pd
     import yfinance as yf
