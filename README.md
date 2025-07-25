@@ -631,9 +631,8 @@ This systematic trading strategy utilizes Anchored VWAPs to identify trends, sup
     
     ticker_data = {}
     tickers = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", 
-    "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", 
-    "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"
-    ]
+               "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", 
+               "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
 
     for ticker in tickers: 
         df = prepare_data(ticker)
@@ -861,12 +860,9 @@ The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-
     import matplotlib.pyplot as plt
     from datetime import datetime
 
-    tickers = ["ABG.JO", "AEL.JO", "AFT.JO", "AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO",
-               "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO",
-                "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO",
-                "NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO",
-                "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO",
-                 "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+    tickers = ["ABG.JO", "AEL.JO", "AFT.JO", "AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO",
+               "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO", "NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO",
+               "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO","TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
 
     start_date = "2024-01-01"
     end_date = "2025-06-11"
