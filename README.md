@@ -952,21 +952,3 @@ The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-
 The Exponentially Weighted Moving Average Crossover (EWMAC) strategy is a robust and intuitive trend-following trading rule that captures medium- to long-term momentum in asset prices. By comparing a fast-moving average to a slow-moving average, the strategy identifies directional trends: it generates buy signals when prices are trending upward (fast MA > slow MA) and sell signals during downtrends (fast MA < slow MA).
 
 The result is a dynamic signal that is responsive to trends, adaptive to volatility, and simple to implement, making it an ideal component of a systematic trading strategy. Its strength lies not only in its performance but also in its behavioral justification, simplicity, and positive skewness — offering large potential gains during strong market trends while limiting losses in range-bound periods.
-
-# DISCOUNTED CASH FLOW (DCF) MODEL
-
-The DCF model estimates a company's intrinsic value by projecting its future cash flows and discounting them to the present value using the Weighted Average Cost of Capital (WACC). The model assumes that a company's value is the sum of its future Free Cash Flow to Firm (FCFF), adjusted for the time value of money and risk.
-
-To estimate the intrinsic value of a company, several componets and financial metrics are required. FCFF represents the cash flow available to all capital providers - both equity and debt - after accounting for operating expenses, taxes, capital expenditures, and changes in working capital. The Weighted Average Cost of Capital (WACC) is used as the discount rate in valuation, incorporating the cost of equity and cost of debt, each weighted according to the company's capital structure, to reflect its risk profile.
-
-Another critical metric is Return on Invested Capital (ROIC), which measures how efficiently a company generayes returns on the capital invested in its business determining its quality. Comparing ROIC to WACC helps assess whether the firm is creating or destroying value. The intrinsic value is determined by discounted projected FCFFs and a terminal value (which captures the value beyond the explicit forecast period using a perpertual growth rate), then subtracting net debt and dividing the results by the number of shares outstanding to obtaing a fair value per share.
-
-The necessary data to perform these calculations is sourced from Yahoo Finance and includes financial line items such as operating income (EBIT), taxes payable, depreciation and amortization, capital expenditures, changes in non-cash working capital, interest expense, total debt, income before tax, market capitalization, number of shares outstanding, cash balances, and beta. In addition to these, certain assumptions must be made - such as the risk-free rate, expected market return, short-term FCCF growth rate, and perpetual growth rate - as they are not directly available from financial databases.
-
-With this data, several calculations are performed: determining the cost of debt and cost of equity (using the Capital Asset Pricing Model or CAPM), computing WACC, calculating ROIC, forecasting future FCFFs, and estimating the terminal value. These inputs are then used to arrive at the fair value per share, helping us assess whether a stock is undervalued or overvalued.
-
-
-**Explanation**
-
-This value momentum investing is an innovative investment strategy that merges the foundational principles of value and investing with the dynamics aspects of momentum investing. At its core, value investing seeks to identify stocks that are undervalued relative to their intrinsic worth. Momentum investing, on the other hand, leverages the tendency of stocks to continue moving in the same direction-upward or downward based on recent price movements. This hybrid approach aims to invest in undervalued stocks that are currently experiencing increasing demand, thereby maximizing potential returns while minimizing risk. By harnessing the strengths of both strategies, Amare Capital Management (Pty) Ltd can capitalize on market inefficiencies and identify opportunities that others may overlook.
-
