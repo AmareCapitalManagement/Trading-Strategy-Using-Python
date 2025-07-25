@@ -1102,7 +1102,4 @@ With this data, several calculations are performed: determining the cost of debt
 
 **Explanation**
 
-The enhanced DCF model uses Python libraries to fetch and process financial data, aligning closely with a structured spreadsheets approach and visualizations to 
-include FCFF projections, present value contributions, ROIC vs WACC, and sensitivity analysis, helping us better understand how growth, risk, and capital efficiency influence fair value per share.
-
 This value momentum investing is an innovative investment strategy that merges the foundational principles of value and investing with the dynamics aspects of momentum investing. At its core, value investing seeks to identify stocks that are undervalued relative to their intrinsic worth. Momentum investing, on the other hand, leverages the tendency of stocks to continue moving in the same direction-upward or downward based on recent price movements. This hybrid approach aims to invest in undervalued stocks that are currently experiencing increasing demand, thereby maximizing potential returns while minimizing risk. By harnessing the strengths of both strategies, Amare Capital Management (Pty) Ltd can capitalize on market inefficiencies and identify opportunities that others may overlook.
