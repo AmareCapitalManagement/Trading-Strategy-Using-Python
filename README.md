@@ -851,64 +851,80 @@ The EWMAC (Exponentially Weighted Moving Average Crossover) strategy is a trend-
 
     import yfinance as yf
     import pandas as pd
-    import numpy as np 
-    import matplotlib.pyplot as plt 
-    from datetime import datetime 
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from datetime import datetime
 
-    ticker = "TSLA"
+    tickers = ["ABG.JO", "AEL.JO", "AFT.JO", "AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO",
+               "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO",
+                "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO",
+                "NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO",
+                "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO",
+                 "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+
     start_date = "2024-01-01"
-    end_date = "2025-05-15"
-
-    Lfast = 16 
-    Lslow = 4 * Lfast 
-    vol_lookback = 25 
-    capmin = -20 
-    capmax = 20 
-
-    data = yf.download(ticker, start=start_date, end=end_date)
-    price = data['Adj Close'].dropna()
-
-    fast_ewma = price.ewm(span=Lfast).mean()
-    slow_ewma = price.ewm(span=Lslow).mean()
-    raw_ewmac = fast_ewma - slow_ewma 
-
-    returns = price.pct_change()
-    vol = returns.ewm(span=vol_lookback).std()
-    vol_adj_ewmac = raw_ewmac / vol 
+    end_date = "2025-06-11"
+    Lfast = 16
+    Lslow = 4 * Lfast
+    vol_lookback = 25
+    capmin = -20
+    capmax = 20
 
     def ewmac_forecast_scalar(Lfast, Lslow):
         return 10 / np.sqrt(Lfast)
 
     f_scalar = ewmac_forecast_scalar(Lfast, Lslow)
-    forecast = vol_adj_ewmac * f_scalar 
 
-    cap_forecast = forecast.clip(lower=capmin, upper=capmax)
+    data = yf.download(tickers, start=start_date, end=end_date)
 
-    plt.figure(figsize=(14,7))
-    plt.plot(price, label='Price', color='black')
-    plt.plot(fast_ewma, label=f'Fast EWMA ({Lfast})', linestyle='--')
-    plt.plot(slow_ewma, label=f'Slow EWMA ({Lslow})', linestyle='--')
-    plt.title(f"EWMAC Crossover Strategy: {ticker}")
-    plt.xlabel("Date")
-    plt.ylabel("Price")
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.savefig("ewmac_crossover.png")
-    plt.show()
-    
-    plt.figure(figsize=(14, 5))
-    plt.plot(cap_forecast, label='Capped Forecast Signal')
-    plt.title(f"Capped EWMAC Forecast Signal: {ticker}")
-    plt.xlabel("Date")
-    plt.ylabel("Forecast Value")
-    plt.axhline(10, color='green', linestyle='--', label='Buy Threshold')
-    plt.axhline(-10, color='red', linestyle='--', label='Sell Threshold')
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
+    for ticker in tickers:
+        try:
+            price = data["Close"][ticker].dropna()
 
+            if price.empty:
+               print(f"No data for {ticker}. Skipping...")
+               continue
+            
+            fast_ewma = price.ewm(span=Lfast).mean()
+            slow_ewma = price.ewm(span=Lslow).mean()
+            raw_ewmac = fast_ewma - slow_ewma
+
+            returns = price.pct_change()
+            vol = returns.ewm(span=vol_lookback).std()
+            vol_adj_ewmac = raw_ewmac / vol
+
+            forecast = vol_adj_ewmac * f_scalar
+            cap_forecast = forecast.clip(lower=capmin, upper=capmax)
+
+            fig, axs = plt.subplots(1, 2, figsize=(18, 6))
+
+            axs[0].plot(price, label='Price', color='black')
+            axs[0].plot(fast_ewma, label=f'Fast EWMA ({Lfast})', linestyle='--')
+            axs[0].plot(slow_ewma, label=f'Slow EWMA ({Lslow})', linestyle='--')
+            axs[0].set_title(f"EWMAC Crossover\n{ticker}")
+            axs[0].set_xlabel("Date")
+            axs[0].set_ylabel("Price")
+            axs[0].legend()
+            axs[0].grid(True)
+        
+            axs[1].plot(cap_forecast, label='Capped Forecast Signal', color='blue')
+            axs[1].axhline(10, color='green', linestyle='--', label='Buy Threshold')
+            axs[1].axhline(-10, color='red', linestyle='--', label='Sell Threshold')
+            axs[1].set_title("Capped EWMAC Forecast Signal")
+            axs[1].set_xlabel("Date")
+            axs[1].set_ylabel("Forecast Value")
+            axs[1].legend()
+            axs[1].grid(True)
+
+            plt.tight_layout()
+            plt.savefig(f"{ticker}_ewmac_combined.png")
+            plt.close()
+
+            print(f" Saved: {ticker}_ewmac_combined.png")
+
+        except Exception as e:
+            print(f" Error with {ticker}: {e}")
+   
 **Explanation**
 
 The Exponentially Weighted Moving Average Crossover (EWMAC) strategy is a robust and intuitive trend-following trading rule that captures medium- to long-term momentum in asset prices. By comparing a fast-moving average to a slow-moving average, the strategy identifies directional trends: it generates buy signals when prices are trending upward (fast MA > slow MA) and sell signals during downtrends (fast MA < slow MA).
