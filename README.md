@@ -14,11 +14,12 @@ Value factor identifies stocks trading below their intrinsic value, using metric
     import warnings
     from statistics import mean 
     from datetime import datetime, timedelta
+    import time
 
     warnings.filterwarnings("ignore")
 
-    stocks = ["AAPL", "TSLA", "MSFT","AMZN", "META", "JNJ", "JPM", "XOM", "NVDA"]
-
+    stocks = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO",                   "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO",                   "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
+ 
 **Explanation**
 
 We use numpy for calculations, pandas for data handling, yfinance for Yahoo Finance data, math for share calculations, scipy.stats for percentiles, and xlswriter for Excel output. The warnings library supresses yfinance depreciation warnings.
@@ -27,30 +28,35 @@ We use numpy for calculations, pandas for data handling, yfinance for Yahoo Fina
 
 (Valueation metrics (P/E, P/B, P/S, EV/EBIT, EV/EBITDA, EV/GP) are critical for identifying value stocks, and momentum metrics (1-M, 3-M, 6-M, 12-M) for identifying trending stocks. A DataFrame organizes these metrics for analysis, enabling ranking and filtering)
 
+    from IPython.display import display 
+
     def get_valuation_ratios(ticker):
         stock = yf.Ticker(ticker)
         info = stock.info
 
         try:
             name = info.get('shortName', 'N/A')
-            price = info.get('currentPrice', np.nan)
+            sector = info.get('sector', 'N/A')
+            price_cents = info.get('currentPrice', np.nan)
+            price = price_cents / 100 if not np.isnan(price_cents) else np.nan
+            price_str = f"R{price:,.2f}" if not np.isnan(price) else "N/A"
+        
             pe_ratio = info.get('trailingPE', np.nan)
             pb_ratio = info.get('priceToBook', np.nan)
-
-            if pb_ratio == np.nan:
+            if np.isnan(pb_ratio):
                 print(f"P/B is missing for {ticker}")
-        
             ps_ratio = info.get('priceToSalesTrailing12Months', np.nan)
             ev = info.get('enterpriseValue', np.nan)
             ebitda = info.get('ebitda', np.nan)
             gross_profit = info.get('grossProfits', np.nan)
-        
             ev_to_ebitda = ev / ebitda if ev and ebitda else np.nan
             ev_to_gp = ev / gross_profit if ev and gross_profit else np.nan
 
             return {
                 'Ticker': ticker,
-                'Price': price,
+                'Name': name,
+                'Sector': sector,
+                'Price': price_str,
                 'P/E': pe_ratio,
                 'P/B': pb_ratio,
                 'P/S': ps_ratio,
@@ -58,20 +64,22 @@ We use numpy for calculations, pandas for data handling, yfinance for Yahoo Fina
                 'EV/GP': ev_to_gp
             }
 
-      except Exception as e:
-          print(f"Error fetching ratios for {ticker}: {e}")
-          return {
-              'Ticker': ticker,
-              'Price': price,
-              'P/E': np.nan,
-              'P/B': np.nan,
-              'P/S': np.nan,
-              'EV/EBITDA': np.nan,
-              'EV/GP': np.nan
-          }
+        except Exception as e:
+            print(f"Error fetching ratios for {ticker}: {e}")
+            return {
+                'Ticker': ticker,
+                'Name': 'N/A',
+                'Sector':'N/A',
+                'Price': 'N/A',
+                'P/E': np.nan,
+                'P/B': np.nan,
+                'P/S': np.nan,
+                'EV/EBITDA': np.nan,
+                'EV/GP': np.nan
+            }
 
     value_data = [get_valuation_ratios(ticker) for ticker in stocks]
-    value_df = pd.DataFrame(data)
+    value_df = pd.DataFrame(value_data)
 
     end_date = datetime.today()
     start_date = end_date - timedelta(days=730)
@@ -94,8 +102,11 @@ We use numpy for calculations, pandas for data handling, yfinance for Yahoo Fina
         momentum_df[f"{label} Return"] = momentum_df[f"{label} Return"].apply(lambda x: f"{x:.2%}")
 
     combined_df = pd.merge(value_df, momentum_df, left_on='Ticker', right_index=True)
+    pd.set_option('display.width', None)
     pd.set_option('display.max_columns', None)
-    print(combined_df)
+    display(combined_df)
+
+    combined_df.to_excel("stock_valuation_momentum.xlsx", index=False)
 
 **Explanation**
 
@@ -157,16 +168,26 @@ We replace missing values with the mean of non-misssing values for each metric. 
     combined_df['Value Score'] = combined_df[list(value_metrics.values())].mean(axis=1)
     combined_df['Momentum Score'] = combined_df[list(momentum_metrics.values())].mean(axis=1)
 
-    top_value_stocks = combined_df.sort_values('Value Score').head(9).reset_index(drop=True)
-    top_momentum_stocks = combined_df.sort_values('Momentum Score', ascending=False).head(9).reset_index(drop=True)
+    value_buy_thresh = combined_df['Value Score'].quantile(0.2)
+    value_sell_thresh = combined_df['Value Score'].quantile(0.8)
+    momentum_buy_thresh = combined_df['Momentum Score'].quantile(0.8)
+    momentum_sell_thresh = combined_df['Momentum Score'].quantile(0.2)
 
-    final_df = combined_df[['Ticker', 'Value Score', 'Momentum Score']]
+    combined_df['Value Signal'] = combined_df['Value Score'].apply(
+        lambda x: 'BUY' if x <= value_buy_thresh else ('SELL' if x >= value_sell_thresh else 'HOLD')
+    )
 
-    final_df.sort_values(by='Value Score', ascending=True, inplace=True)
+    combined_df['Momentum Signal'] = combined_df['Momentum Score'].apply(
+        lambda x: 'BUY' if x >= momentum_buy_thresh else ('SELL' if x <= momentum_sell_thresh else 'HOLD')
+    )
+
+    final_df = combined_df[['Ticker', 'Value Score', 'Value Signal', 'Momentum Score', 'Momentum Signal']]
+    final_df.sort_values(by='Ticker', inplace=True)
     final_df.reset_index(drop=True, inplace=True)
 
-    print(final_df)
-
+    pd.set_option('display.max_rows', None)
+    print(final_df)                                                      
+                                                                                        
 **Explanation**
 
 We compute percentile ranks for each metric using scipy.stats.percentileofscore. The RV Score is the average of the valuation metrics, with lower scores indicating better value, and the average of the momentum metrics, with higher scores indicating higher quality momentum. We sort by RV Score, select the top stocks, and reset the index. Combining these steps aligns the analytical focus on ranking and filtering.
