@@ -814,6 +814,7 @@ This step runs the VWAP-based strategy and prints a clear, date-stamped trade su
     from misc.chart_annotation import get_chart_annotation_1d
     from ratio import draw_ratio   
     import matplotlib.pyplot as plt
+    import warnings 
 
     for ticker in ticker_data:
         draw_5_days_avg(ticker=ticker, interval="15m")  
@@ -821,10 +822,13 @@ This step runs the VWAP-based strategy and prints a clear, date-stamped trade su
 
         draw_profile_of_data(ohlc_df=ticker_data[ticker], ticker=ticker)
         print(f"{ticker}: Price and Volume profile image generated")
+
+    GENERATE_INTRADAY_VWAP = False # We can toggle this to true if we want to re-enable it 
     
-        intraday_df = get_ohlc_from_yf(ticker=ticker, period="5d", interval="1m")
-        intraday_df = add_atr_col_to_df(intraday_df, n=ATR_SMOOTHING_N, exponential=False)
-    
+    intraday_df = get_ohlc_from_yf(ticker=ticker, period="5d", interval="1m")
+    intraday_df = add_atr_col_to_df(intraday_df, n=ATR_SMOOTHING_N, exponential=False)
+
+    if GENERATE_INTRADAY_VWAP:
         vwaps_plot_build_save(
             input_df=intraday_df,
             anchor_dates=anchor_dates_dict[ticker],
@@ -834,13 +838,10 @@ This step runs the VWAP-based strategy and prints a clear, date-stamped trade su
             file_name=f"intraday_{ticker}.png",
             hide_extended_hours=True,
             print_df=False
-       )
-       print(f"{ticker}: Intraday VWAP image generated")
-
-       print(f"{ticker}: Close-to-Close ratio image generated")
-       draw_ratio(ticker_1=ticker, ticker_2="MSFT", cutoff_date="2020-01-01")    
-       plt.close()
-
+        )
+        print(f"{ticker}: Intraday VWAP image generated") 
+        plt.close()
+    
 Explanation
 
 The reason for integrating intraday tools such as SMA, volume profiles, relative strength ratios, and quick charting features is to enrich the daily trading strategy with more granular, real-time insights into market conditions. By incorporating these elements, traders can monitor price movements and trends more effectively within the day, allowing for better short-term decision-making. The use of intraday VWAP and other indicators helps identify key price levels and trends during trading hours, enhancing the strategy’s accuracy.
