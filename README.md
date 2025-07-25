@@ -965,7 +965,200 @@ The necessary data to perform these calculations is sourced from Yahoo Finance a
 
 With this data, several calculations are performed: determining the cost of debt and cost of equity (using the Capital Asset Pricing Model or CAPM), computing WACC, calculating ROIC, forecasting future FCFFs, and estimating the terminal value. These inputs are then used to arrive at the fair value per share, helping us assess whether a stock is undervalued or overvalued.
 
+import pandas as pd
+import numpy as np
+import yfinance as yf
+import matplotlib.pyplot as plt
+import seaborn as sns 
 
+# Define the DCF Function 
+def calculate_dcf(ticker, growth_rate=0.1, perpetual_growth_rate=0.02, risk_free_rate=0.04, market_return=0.10, forecast_years=4):
+    """
+    Calculate the intrinsic value per share using a DCF model. 
+
+    Parameters:
+        ticker (str): Company ticker symbol 
+        growth_rate (float): Annual growth rate for FCFF projections
+        perpetual_growth_rate (float): Growth rate for terminal value
+        risk_free_rate (float): Risk-free rate
+        market_return (float): Expected market return
+        forecast_years (int): Number of years for explicit forecast
+
+    Returns:
+        dict: Results including FCFF, WACC, ROIC, and fair value per share.
+
+    """
+
+    # Fetch data from Yahoo Finance 
+    try:
+        company = yf.Ticker(ticker)
+        financials = company.financials
+        balance_sheet = company.balance_sheet
+        cashflow = company.cashflow
+        info = company.info
+
+        # Income Statement
+        ebit = financials.loc['EBIT'].iloc[0] if 'EBIT' in financials.index else 0
+        interest_expense = financials.loc['Interest Expense'].iloc[0] if 'Interest Expense' in financials.index else 0
+        income_before_tax = financials.loc['Pretax Income'].iloc[0] if 'Pretax Income' in financials.index else 0
+        taxes = financials.loc['Tax Provision'].iloc[0] if 'Tax Provision' in financials.index else 0
+
+        # Balance Sheet
+        total_debt = balance_sheet.loc['Total Debt'].iloc[0] if 'Total Debt' in balance_sheet.index else 0
+        cash_equivalents = balance_sheet.loc['Cash And Cash Equivalents'].iloc[0] if 'Cash And Cash Equivalents' in balance_sheet.index else 0
+        current_assets = balance_sheet.loc['Current Assets'].iloc[0] if 'Current Assets' in balance_sheet.index else 0
+        current_liabilities = balance_sheet.loc['Current Liabilities'].iloc[0] if 'Current Liabilities' in balance_sheet.index else 0
+        net_ppe = balance_sheet.loc['Net PPE'].iloc[0] if 'Net PPE' in balance_sheet.index else 0
+
+        # Cash Flow Statement
+        depreciation = cashflow.loc['Depreciation And Amortization'].iloc[0] if 'Depreciation And Amortization' in cashflow.index else 0
+        capex = cashflow.loc['Capital Expenditure'].iloc[0] if 'Capital Expenditure' in cashflow.index else 0
+        working_capital_change = cashflow.loc['Change In Working Capital'].iloc[0] if 'Change In Working Capital' in cashflow.index else 0
+
+        # Market Info
+        beta = info.get('beta', 1.0)
+        market_cap = info.get('marketCap', 0)
+        shares_outstanding = info.get('sharesOutstanding', 1)
+
+        # Calculate FCFF (FCFF = EBIT - Taxes + Depreciation + Amortization - CapEx - Changes in Working Capital)
+        fcff = ebit - taxes + depreciation - capex - working_capital_change
+
+        # Calculate Cost of Debt (Cost of Debt = (Interest Expense / Total Debt) * (1 - Effective Tax Rate)
+        effective_tax_rate = taxes / income_before_tax if income_before_tax != 0 else 0.25 
+        cost_of_debt = (interest_expense / total_debt) * (1- effective_tax_rate) if total_debt != 0 else 0
+
+        # Calculate Cost of Equity (CAPM) (Cost of Equity = Risk-Free Rate + Beta * (Market Return - Risk-Free Rate))
+        cost_of_equity = risk_free_rate + beta * (market_return - risk_free_rate)
+
+        # Calculate WACC (WACC = (E / (D+E)) * Cost of Equity + (D / (D + E)) * Cost of Debt)
+        total_weight = total_debt + market_cap 
+        weight_debt = total_debt / total_weight if total_weight != 0 else 0
+        weight_equity = market_cap / total_weight if total_weight != 0 else 1
+        wacc = (weight_equity * cost_of_equity) + (weight_debt * cost_of_debt)
+
+        # Calculate ROIC (Quality Investing) - ROIC = (EBIT * (1 - Tax Rate)) / Invested Capital (Invested Capital = Current Assets - Current Liabilities + Net PP&E)
+        invested_capital = current_assets - current_liabilities + net_ppe 
+        roic = (ebit * (1 - effective_tax_rate)) / invested_capital if invested_capital != 0 else 0 
+
+        # Project Future FCFF (Project fo 5 years using different estimates of growth rate)
+        future_fcff = [fcff * (1 + growth_rate) ** t for t in range(1, forecast_years + 1)]
+
+        # Calculate Terminal Value using the Gordon Growth Model (Terminal Value = FCFF_n * (1 + Perpetual Growth Rate) / (WACC - Perpetual Growth Rate))
+        last_fcff = future_fcff[-1] if future_fcff else fcff
+        terminal_value = (last_fcff * (1 + perpetual_growth_rate)) / (wacc - perpetual_growth_rate) if wacc > perpetual_growth_rate else 0
+
+        # Discount FCFF and Terminal Value (PV = Cash Flow / (1 + WACC)^t)
+        pv_fcff = [fcff / (1 + wacc) ** t for t, fcff in enumerate(future_fcff, 1)]
+        pv_terminal = terminal_value / (1 + wacc) ** forecast_years if terminal_value != 0 else 0
+
+        # Calculate Intrinsic Value Per Share (Market Equity Value = Sum(PV of FCFF) + PV of Terminal Value + Cash - Debt)
+        total_pv = sum(pv_fcff) + pv_terminal
+        market_equity_value = total_pv + cash_equivalents - total_debt
+        fair_value_per_share = market_equity_value / shares_outstanding if shares_outstanding != 0 else 0
+
+        # Calculate Excess Returns (Excess Returns = ROIC - WACC)
+        excess_returns = roic - wacc if roic != 0 and wacc != 0 else 0 
+
+        # Return results 
+        return {
+            'Ticker': ticker,
+            'FCFF': fcff,
+            'WACC': wacc,
+            'ROIC': roic,
+            'Excess Returns': excess_returns,
+            'Future FCFF': future_fcff,
+            'PV of FCFF': pv_fcff,
+            'Terminal Value': terminal_value,
+            'PV of Terminal Value': pv_terminal,
+            'Market Equity Value': market_equity_value,
+            'Fair Value Per Share': fair_value_per_share,
+            'Invested Capital': invested_capital
+        }
+
+    except Exception as e:
+        print(f"Error fetching data or calculating DCF for {ticker}: {e}")
+        return None
+
+# Function to create visualizations 
+
+def plot_dcf_charts(results, ticker):
+    if not results:
+        print("No results to plot.")
+        return
+
+    fig, axs = plt.subplots(2, 2, figsize=(14, 10))  
+    # 1) FCFF Over Time - Line Plot
+    years = ['TTM'] + [f'FY{2025 + i}' for i in range(1, 5)]
+    fcff_values = [results['FCFF']] + results['Future FCFF']
+    axs[0, 0].plot(years, fcff_values, marker='o', color='blue')
+    axs[0, 0].set_title(f'{ticker} FCFF Projections')
+    axs[0, 0].set_xlabel('Year')
+    axs[0, 0].set_ylabel('FCFF (R)')
+    axs[0, 0].grid(True)
+
+    # 2) PV of FCFF vs Terminal Value - Pie Chart
+    pv_fcff_sum = sum(results['PV of FCFF'])
+    pv_terminal = results['PV of Terminal Value']
+    axs[0, 1].pie([pv_fcff_sum, pv_terminal],
+                  labels=['PV of FCFF', 'PV of Terminal Value'],
+                  autopct='%1.1f%%',
+                  colors=['lightgreen', 'lightgray'])
+    axs[0, 1].set_title(f'{ticker} Intrinsic Value Components')
+
+    # 3) WACC vs ROIC - Bar Chart
+    axs[1, 0].bar(['WACC', 'ROIC'],
+                  [results['WACC'] * 100, results['ROIC'] * 100],
+                  color=['orange', 'purple'])
+    axs[1, 0].set_title(f'{ticker} WACC vs ROIC')
+    axs[1, 0].set_ylabel('Percentage (%)')
+    axs[1, 0].grid(True, axis='y')
+
+    # 4) Sensitivity Heatmap
+    growth_rates = np.linspace(max(0.05, results['WACC'] - 0.02), 0.15, 5)
+    wacc_rates = np.linspace(max(0.03, results['WACC'] - 0.02), results['WACC'] + 0.02, 5)
+    fair_values = np.zeros((len(growth_rates), len(wacc_rates)))
+    for i, g in enumerate(growth_rates):
+        for j, w in enumerate(wacc_rates):
+            temp_results = calculate_dcf(ticker,
+                                         growth_rate=g,
+                                         perpetual_growth_rate=min(g, w - 0.01),
+                                         risk_free_rate=0.04,
+                                         market_return=0.10)
+            fair_values[i, j] = temp_results['Fair Value Per Share'] if temp_results else 0
+
+    sns.heatmap(fair_values,
+                xticklabels=[f"{x*100:.1f}%" for x in wacc_rates],
+                yticklabels=[f"{x*100:.1f}%" for x in growth_rates],
+                annot=True,
+                fmt=".2f",
+                cmap="YlGnBu",
+                ax=axs[1, 1])
+    axs[1, 1].set_title(f'{ticker} Sensitivity: Fair Value (R)')
+    axs[1, 1].set_xlabel('WACC (%)')
+    axs[1, 1].set_ylabel('Growth Rate (%)')
+
+    plt.tight_layout()
+    plt.show()
+    
+ticker = "MSFT"
+results = calculate_dcf(ticker)
+
+if results:
+    print(f"DCF Analysis for {results['Ticker']}:")
+    print(f"FCFF: R{results['FCFF']:,.2f}")
+    print(f"WACC: {results['WACC']*100:.2f}%")
+    print(f"ROIC: {results['ROIC']*100:.2f}%")
+    print(f"Excess Returns: {results['Excess Returns']*100:.2f}%")
+    print(f"Future FCFF (2026-2030): {[f'T{x:,.2f}' for x in results['Future FCFF']]}")
+    print(f"PV of FCFF: {[f'R{x:,.2f}' for x in results['PV of FCFF']]}")
+    print(f"Terminal Value: R{results['Terminal Value']:,.2f}")
+    print(f"PV of Terminal Value: R{results['PV of Terminal Value']:,.2f}")
+    print(f"Market Equity Value: R{results['Market Equity Value']:,.2f}")
+    print(f"Fair Value Per Share: R{results['Fair Value Per Share']:,.2f}")
+
+    plot_dcf_charts(results, ticker)
+else:
+    print("Failed to compute DCF. Check ticker or data availability")
 
 **Explanation**
 
