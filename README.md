@@ -981,7 +981,7 @@ With this data, several calculations are performed: determining the cost of debt
         except:
             return"0.00%"
  
-    def calculate_dcf(ticker, growth_rate=0 perpetual_growth_rate=0.02, risk_free_rate=0.04, market_return=0.10, forecast_years=4):
+    def calculate_dcf(ticker, growth_rate=0.1, perpetual_growth_rate=0.02, risk_free_rate=0.04, market_return=0.10, forecast_years=5):
         """
         Calculate the intrinsic value per share using a DCF model. 
 
@@ -1005,6 +1005,14 @@ With this data, several calculations are performed: determining the cost of debt
             cashflow = company.cashflow
             info = company.info
 
+            name = info.get('shortName', 'N/A')
+            sector = info.get('sector', 'N/A')
+            industry = info.get('industry', 'N/A')
+            country = info.get('country', 'N/A')
+            website = info.get('website', 'N/A')
+            description = info.get('longBusinessSummary', 'No description available.')
+            desc_snippet = textwrap.shorten(description, width=300, placeholder="...")
+
             ebit = financials.loc['EBIT'].iloc[0] if 'EBIT' in financials.index else 0
             interest_expense = financials.loc['Interest Expense'].iloc[0] if 'Interest Expense' in financials.index else 0
             income_before_tax = financials.loc['Pretax Income'].iloc[0] if 'Pretax Income' in financials.index else 0
@@ -1023,14 +1031,12 @@ With this data, several calculations are performed: determining the cost of debt
             beta = info.get('beta', 1.0)
             market_cap = info.get('marketCap', 0)
             shares_outstanding = info.get('sharesOutstanding', 1)
-
+            current_price = info.get('currentPrice', 0)
+            
             fcff = ebit - taxes + depreciation - capex - working_capital_change
-
             effective_tax_rate = taxes / income_before_tax if income_before_tax != 0 else 0.25 
             cost_of_debt = (interest_expense / total_debt) * (1- effective_tax_rate) if total_debt != 0 else 0
-
             cost_of_equity = risk_free_rate + beta * (market_return - risk_free_rate)
-
             total_weight = total_debt + market_cap 
             weight_debt = total_debt / total_weight if total_weight != 0 else 0
             weight_equity = market_cap / total_weight if total_weight != 0 else 1
@@ -1038,12 +1044,11 @@ With this data, several calculations are performed: determining the cost of debt
 
             invested_capital = current_assets - current_liabilities + net_ppe 
             roic = (ebit * (1 - effective_tax_rate)) / invested_capital if invested_capital != 0 else 0 
-
+            excess_returns = roic - wacc if roic != 0 and wacc != 0 else 0 
+            
             future_fcff = [fcff * (1 + growth_rate) ** t for t in range(1, forecast_years + 1)]
-
             last_fcff = future_fcff[-1] if future_fcff else fcff
             terminal_value = (last_fcff * (1 + perpetual_growth_rate)) / (wacc - perpetual_growth_rate) if wacc > perpetual_growth_rate else 0
-
             pv_fcff = [fcff / (1 + wacc) ** t for t, fcff in enumerate(future_fcff, 1)]
             pv_terminal = terminal_value / (1 + wacc) ** forecast_years if terminal_value != 0 else 0
 
@@ -1051,102 +1056,42 @@ With this data, several calculations are performed: determining the cost of debt
             market_equity_value = total_pv + cash_equivalents - total_debt
             fair_value_per_share = market_equity_value / shares_outstanding if shares_outstanding != 0 else 0
 
-            excess_returns = roic - wacc if roic != 0 and wacc != 0 else 0 
+            upside = ((fair_value_per_share - current_price) / current_price) * 100 if current_price else 0
+            margin_of_safety_pct = ((fair_value_per_share - current_price) / fair_value_per_share) * 100 if fair_value_per_share != 0 else 0
+            valuation = "Undervalued" if upside > 0 else "Overvalued"
 
-            return {
-                'Ticker': ticker,
-                'FCFF': fcff,
-                'WACC': wacc,
-                'ROIC': roic,
-                'Excess Returns': excess_returns,
-                'Future FCFF': future_fcff,
-                'PV of FCFF': pv_fcff,
-                'Terminal Value': terminal_value,
-                'PV of Terminal Value': pv_terminal,
-                'Market Equity Value': market_equity_value,
-                'Fair Value Per Share': fair_value_per_share,
-                'Invested Capital': invested_capital
-            }
-
+            output = f"\n{'='*80}\n"
+            output += f"DCF Analysis for {ticker} - {name}\n"
+            output += f"Sector: {sector}\nIndustry: {industry}\nCountry: {country}\nWebsite: {website}\n"
+            output += f"Description: {desc_snippet}\n\n"
+            output += f"FCFF: {format_currency(fcff)}\n"
+            output += f"WACC: {format_percentage(wacc)}\n"
+            output += f"ROIC: {format_percentage(roic)}\n"
+            output += f"Excess Returns: {format_percentage(excess_returns)}\n"
+            output += f"Future FCFF ({2025+1}-{2025+forecast_years}): {[format_currency(x, prefix='T') for x in future_fcff]}\n"
+            output += f"PV of FCFF: {[format_currency(x) for x in pv_fcff]}\n"
+            output += f"Terminal Value: {format_currency(terminal_value)}\n"
+            output += f"PV of Terminal Value: {format_currency(pv_terminal)}\n"
+            output += f"Market Equity Value: {format_currency(market_equity_value)}\n"
+            output += f"Fair Value Per Share: {format_currency(fair_value_per_share)}\n"
+            output += f"Current Price: {format_currency(current_price)}\n"
+            output += f"Upside: {upside:.2f}%\n"
+            output += f"Margin of Safety: {margin_of_safety_pct:.2f}%\n"
+            output += f"Valuation: {valuation}\n"
+            output += f"{'='*80}\n" 
+            return output
+        
         except Exception as e:
-            print(f"Error fetching data or calculating DCF for {ticker}: {e}")
-            return None 
+            return f"Error fetching data or calculating DCF for {ticker}: {e}"
+       
+    tickers = ["ABG.JO", "AEL.JO", "AFT.JO", "AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO","BTI.JO", 
+               "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", 
+               "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO", "NED.JO", "NPN.JO", "NTC.JO", 
+               "OMU.JO", "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", 
+               "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO","TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
 
-    def plot_dcf_charts(results, ticker):
-        if not results:
-            print("No results to plot.")
-            return
-
-        fig, axs = plt.subplots(2, 2, figsize=(14, 10))  
-    
-        years = ['TTM'] + [f'FY{2025 + i}' for i in range(1, 5)]
-        fcff_values = [results['FCFF']] + results['Future FCFF']
-        axs[0, 0].plot(years, fcff_values, marker='o', color='blue')
-        axs[0, 0].set_title(f'{ticker} FCFF Projections')
-        axs[0, 0].set_xlabel('Year')
-        axs[0, 0].set_ylabel('FCFF (R)')
-        axs[0, 0].grid(True)
-
-        pv_fcff_sum = sum(results['PV of FCFF'])
-        pv_terminal = results['PV of Terminal Value']
-        axs[0, 1].pie([pv_fcff_sum, pv_terminal],
-                  labels=['PV of FCFF', 'PV of Terminal Value'],
-                  autopct='%1.1f%%',
-                  colors=['lightgreen', 'lightgray'])
-        axs[0, 1].set_title(f'{ticker} Intrinsic Value Components')
-
-        axs[1, 0].bar(['WACC', 'ROIC'],
-                  [results['WACC'] * 100, results['ROIC'] * 100],
-                  color=['orange', 'purple'])
-        axs[1, 0].set_title(f'{ticker} WACC vs ROIC')
-        axs[1, 0].set_ylabel('Percentage (%)')
-        axs[1, 0].grid(True, axis='y')
-
-        growth_rates = np.linspace(max(0.05, results['WACC'] - 0.02), 0.15, 5)
-        wacc_rates = np.linspace(max(0.03, results['WACC'] - 0.02), results['WACC'] + 0.02, 5)
-        fair_values = np.zeros((len(growth_rates), len(wacc_rates)))
-        for i, g in enumerate(growth_rates):
-            for j, w in enumerate(wacc_rates):
-                temp_results = calculate_dcf(ticker,
-                                             growth_rate=g,
-                                             perpetual_growth_rate=min(g, w - 0.01),
-                                             risk_free_rate=0.04,
-                                            market_return=0.10)
-                fair_values[i, j] = temp_results['Fair Value Per Share'] if temp_results else 0
-
-        sns.heatmap(fair_values,
-                   xticklabels=[f"{x*100:.1f}%" for x in wacc_rates],
-                   yticklabels=[f"{x*100:.1f}%" for x in growth_rates],
-                annot=True,
-                fmt=".2f",
-                cmap="YlGnBu",
-                ax=axs[1, 1])
-        axs[1, 1].set_title(f'{ticker} Sensitivity: Fair Value (R)')
-        axs[1, 1].set_xlabel('WACC (%)')
-        axs[1, 1].set_ylabel('Growth Rate (%)')
-
-        plt.tight_layout()
-        plt.show()
-    
-    ticker = "MSFT"
-    results = calculate_dcf(ticker)
-
-    if results:
-        print(f"DCF Analysis for {results['Ticker']}:")
-        print(f"FCFF: R{results['FCFF']:,.2f}")
-        print(f"WACC: {results['WACC']*100:.2f}%")
-        print(f"ROIC: {results['ROIC']*100:.2f}%")
-        print(f"Excess Returns: {results['Excess Returns']*100:.2f}%")
-        print(f"Future FCFF (2026-2030): {[f'T{x:,.2f}' for x in results['Future FCFF']]}")
-        print(f"PV of FCFF: {[f'R{x:,.2f}' for x in results['PV of FCFF']]}")
-        print(f"Terminal Value: R{results['Terminal Value']:,.2f}")
-        print(f"PV of Terminal Value: R{results['PV of Terminal Value']:,.2f}")
-        print(f"Market Equity Value: R{results['Market Equity Value']:,.2f}")
-        print(f"Fair Value Per Share: R{results['Fair Value Per Share']:,.2f}")
-
-        plot_dcf_charts(results, ticker)
-    else:
-        print("Failed to compute DCF. Check ticker or data availability")
+    for ticker in tickers:
+        print(calculate_dcf(ticker))
 
 **Explanation**
 
