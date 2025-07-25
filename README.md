@@ -1,11 +1,4 @@
-    import numpy as np
-    import pandas as pd
-    import yfinance as yf
-    import math
-      from scipy import stats 
-    import warnings
-     from statistics import mean 
-    from datetime import datetime, timedelta
-    import time
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3f2b953f-e7d8-476e-b1b0-758cbdc004a9" alt="ACM w colour" width="780" height="253">
+</p>
 
-    warnings.filterwarnings("ignore")
