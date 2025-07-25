@@ -6,7 +6,7 @@
 
 **Executive Summary**
 
-Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) operating as a long-short equity hedge fund, headquartered in Pretoria, South Africa. Founded by Kabelo Junior Mosaka, a Bachelor of Commerce in Finance student at the University of the Free State (UFS), the firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in shares and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
+Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) operating as a long-short equity hedge fund, headquartered in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in shares and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
 
 **Company Description**
 
@@ -16,7 +16,7 @@ Structure: Entrepreneurial Investment Partnership (EIP)
 
 Location: Pretoria, South Africa
 
-Leadership: Kabelo Junior Mosaka, Co-Founder and Hedge Fund Manager
+Leadership: Kabelo Junior Mosaka, Co-Founder and Hedge Fund Manager (Bachelor of Commerce in Finance)
 
 Contact: +27 65 852 2723 / kabelojunior10@gmail.com
 
