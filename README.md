@@ -219,22 +219,22 @@ This strategy identifies potential bullish reversals using the hammer candlestic
         return df 
 
     class TickersData:
-       def __init__(self, tickers: list[str], add_features_cols_func: Callable, import_ohlc_func: Callable = import_yahoo_finance_daily):
-          self.tickers_data_with_features = {}
-          self.add_features_cols_func = add_features_cols_func
-          self.import_ohlc_func = add_features_cols_func
-          for ticker in tickers:
-              df = self.get_df_with_features(ticker=ticker)
-              for col in MUST_HAVE_DERIVATIVE_COLUMNS:
-                  if col not in df.columns:
-                     df = add_tr_delta_col_to_ohlc(ohlc_df=df)
-              self.tickers_data_with_features[ticker] = df
+        def __init__(self, tickers: list[str], add_features_cols_func: Callable, import_ohlc_func: Callable = import_yahoo_finance_daily):
+            self.tickers_data_with_features = {}
+            self.add_features_cols_func = add_features_cols_func
+            self.import_ohlc_func = add_features_cols_func
+            for ticker in tickers:
+                df = self.get_df_with_features(ticker=ticker)
+                for col in MUST_HAVE_DERIVATIVE_COLUMNS:
+                    if col not in df.columns:
+                        df = add_tr_delta_col_to_ohlc(ohlc_df=df)
+                self.tickers_data_with_features[ticker] = df
             
-       def get_df_with_features(self, ticker: str) -> pd.DataFrame:
-           filename_with_features = get_local_ticker_data_file_name(ticker, "with_features")
-           filename_raw = get_local_ticker_data_file_name(ticker, "raw")
-           if os.path.exists(filename_with_features):
-               return pd.read_excel
+        def get_df_with_features(self, ticker: str) -> pd.DataFrame:
+            filename_with_features = get_local_ticker_data_file_name(ticker, "with_features")
+            filename_raw = get_local_ticker_data_file_name(ticker, "raw")
+            if os.path.exists(filename_with_features):
+                return pd.read_excel
 
 Explanation
 
@@ -250,7 +250,7 @@ The implementation of the TickersData class enables efficient data retrieval fro
     from derivative_columns.ma import add_moving_average 
     from derivative_columns.hammer import add_col_is_hammer
     from derivative_columns.shooting_star import add_col_is_shooting_star
-
+ 
     MOVING_AVERAGE_N = 200
     REQUIRED_DERIVATIVE_COLUMNS_F_V1_BASIC = {"atr_14", f"ma_{MOVING_AVERAGE_N}", "is_hammer", "is_shooting_star"}
 
@@ -274,7 +274,7 @@ The implementation of the TickersData class enables efficient data retrieval fro
                 res = add_required_cols_for_f_v1_basic(df=res)
         res[FEATURE_COL_NAME_BASIC] = res["Close"] < res[f"ma_{MOVING_AVERAGE_N}"]
         res[FEATURE_COL_NAME_ADVANCED] = (res["ma_200"] - res["Close"]) >= (res["atr_14"] * atr_multiplier_threshold)
-        return res 
+        return res                                                    
 
 Explanation
 
@@ -300,24 +300,24 @@ The add_features_v1_basic function is enhanced to incorporate a hammer candle si
             )
             if strategy.position.size != 0 
             else 0
-       )
-       is_hammer = strategy._data["is_hammer"][-1]
-       price_below_ma200 = strategy._data[FEATURE_COL_NAME_ADVANCED][-1]
-       volatility_ok = strategy.data["tr_delta"][-1] < 2.5 
+        )
+        is_hammer = strategy._data["is_hammer"][-1]
+        price_below_ma200 = strategy._data[FEATURE_COL_NAME_ADVANCED][-1]
+        volatility_ok = strategy.data["tr_delta"][-1] < 2.5 
 
-       desired_position_size: Optional[float] = None 
-       message = DPS_STUB
+        desired_position_size: Optional[float] = None 
+        message = DPS_STUB
 
-       if current_position_size != 0:
-           desired_position_size = current_position_size
-           message = "Maintain existing position"
-           return desired_position_size, current_position_size, message
+        if current_position_size != 0:
+            desired_position_size = current_position_size
+            message = "Maintain existing position"
+            return desired_position_size, current_position_size, message
 
-       if is_hammer and price_below_ma200 and volatility_ok:
-           desired_position_size = 1.0
-           message = "Enter Long: Hammer reversal below MA200 with moderate volatility"
+        if is_hammer and price_below_ma200 and volatility_ok:
+            desired_position_size = 1.0
+            message = "Enter Long: Hammer reversal below MA200 with moderate volatility"
 
-       return desired_position_size, current_position_size, message 
+         return desired_position_size, current_position_size, message 
 
 Explanation 
 
@@ -376,8 +376,7 @@ The existing function such as update_stop_losses and check_set_profit_targets_lo
 (Address market anomalies to avoid losses)
 
     from backtesting import Strategy 
-    from constants2 import CLOSED_VOLATILITY_SPIKE, CLOSED_MAX_DURATION, SS_VOLATILITY_SPIKE, 
-    SS_MAX_DURATION, SS_NO_TODAY
+    from constants2 import CLOSED_VOLATILITY_SPIKE, CLOSED_MAX_DURATION, SS_VOLATILITY_SPIKE, SS_MAX_DURATION, SS_NO_TODAY
     from utils.strategy_exec.misc import add_tag_to_trades_and_close_position
 
     def process_volatility_spike(strategy: Strategy) -> bool:
@@ -431,11 +430,11 @@ The process_special_situation function is employed to automatically close positi
             if strategy_params.save_all_trades_in_xlsx:
                 trades_df["Ticker"] = ticker
                 all_trades = pd.concat([all_trades, trades_df])
-            if len(tickers) > 1:
-                performance_res.to_excel("output.xlsx")
-            if strategy_params.save_all_trades_in_xlsx:
-                all_trades.to_excel("all_trades.xlsx", index=False)
-            return performance_res.loc["SQN_modified", :].mean()
+        if len(tickers) > 1:
+            performance_res.to_excel("output.xlsx")
+        if strategy_params.save_all_trades_in_xlsx:
+            all_trades.to_excel("all_trades.xlsx", index=False)
+        return performance_res.loc["SQN_modified", :].mean()
 
 Explanation
 
@@ -454,7 +453,7 @@ Comprehensive backtests are conducted across all tickers in tickers_all using th
     from utils.local_data import TickersData
     import warnings 
 
-    logging.basicConfig(level=logging.DEBUG, format="%(message)s", filename=LOG_FILE, encoding="utf-8", filemode="a")
+     logging.basicConfig(level=logging.DEBUG, format="%(message)s", filename=LOG_FILE, encoding="utf-8", filemode="a")
 
     if __name__ == "__main__":
         load_dotenv()
@@ -470,10 +469,10 @@ Comprehensive backtests are conducted across all tickers in tickers_all using th
         )
 
         tickers_data = TickersData (
-            add_feature_cols_func=add_features_v1_basic,
+           add_feature_cols_func=add_features_v1_basic,
             tickers=tickers_all,
         )
-  
+
         SQN_modified_mean = run_all_tickers(
             tickers_data=tickers_data,
             tickers=tickers_all,
@@ -494,7 +493,7 @@ SQN_modified is devoid of this drawback. It is simply the average of trade profi
 
 **Step 8: Bearish Signal Detection Using Shooting Star and 200-Day Moving Average**
 
-(We seek to identify potential bearish setups by detecting the reversal Shooting Star candlestick pattern combined with the price trading above the 200-day moving average (MA200). The purpose of this step is not to generate short-selling trades but rather flag stocks that should be avoided for buying after identifying bullish hammer setups.)
+(We seek to identify potential bearish setups by detecting the reversal Shooting Star candlestick pattern combined with the price trading above the 200-day moving average (MA200). The purpose of this step is not mainly used to generate short-selling trades but rather flag stocks that should be avoided for buying after identifying bullish hammer setups.)
 
     import pandas as pd
     import yfinance as yf
@@ -516,9 +515,9 @@ SQN_modified is devoid of this drawback. It is simply the average of trade profi
         filename=LOG_FILE,
         encoding="utf-8",
         filemode="a",
-     )
+    )
 
-    def fetch_ohlc_yfinance(ticker: str, start_date: str = "2020-01-01", end_date: str = "2025-04-06") -> pd.DataFrame:
+    def fetch_ohlc_yfinance(ticker: str, start_date: str = "2020-01-01", end_date: str = "2025-06-11") -> pd.DataFrame:
 
         try:
             df = yf.Ticker(ticker).history(start=start_date, end=end_date, interval="1d")
@@ -532,9 +531,9 @@ SQN_modified is devoid of this drawback. It is simply the average of trade profi
             return df
         except Exception as e:
             logging.error(f"Error fetching data for {ticker}: {str(e)}")
-            return pd.DataFrame()
+            eturn pd.DataFrame()
 
-    def generate_bearish_signals(tickers: List[str], start_date: str = "2020-01-01", end_date: str = "2025-04-06") -> pd.DataFrame:
+    def generate_bearish_signals(tickers: List[str], start_date: str = "2020-01-01", end_date: str = "2025-06-01") -> pd.DataFrame:
    
         results = []
     
@@ -560,7 +559,7 @@ SQN_modified is devoid of this drawback. It is simply the average of trade profi
                     logging.debug(f"NaN counts for {ticker}:\n{nan_counts}")
                 
                     df["Bearish_Signal"] = (
-                        (df["is_shooting_star"] == True) &  
+                        df["is_shooting_star"] == True) &  
                         (df["Close"] > df["ma_200"]) &    
                         (df["tr_delta"] < 3.0)             
                     )
@@ -577,7 +576,7 @@ SQN_modified is devoid of this drawback. It is simply the average of trade profi
                     df.to_excel(f"debug_{ticker}_full_data.xlsx")
                     logging.debug(f"Saved full data for {ticker} to debug_{ticker}_full_data.xlsx")
                 
-                    df_output = df[["Close", "ma_200", "atr_14", "tr_delta", "is_shooting_star", Bearish_Signal"]].copy()
+                    df_output = df[["Close", "ma_200", "atr_14", "tr_delta", "is_shooting_star", "Bearish_Signal"]].copy()
                     df_output["Ticker"] = ticker
                     df_output["Date"] = df_output.index
                     df_output["Distance_to_MA200"] = ((df["Close"] - df["ma_200"]) / df["atr_14"]).round(2)
@@ -602,7 +601,7 @@ SQN_modified is devoid of this drawback. It is simply the average of trade profi
     
         open(LOG_FILE, "w", encoding="utf-8").close()
     
-        custom_tickers = ["SPY", "QQQ", "AAPL", "TSLA"]
+        custom_tickers = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO",                             "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO",                             "PPH.JO", "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO",                            "VOD.JO", "WHL.JO"]
     
         bearish_signals_df = generate_bearish_signals(tickers=custom_tickers)
 
@@ -615,7 +614,6 @@ SQN_modified is devoid of this drawback. It is simply the average of trade profi
         if not bearish_signals_df.empty:
             print("\nSample of bearish signals:")
             print(bearish_signals_df.head())
-
 
 Explanation
 
