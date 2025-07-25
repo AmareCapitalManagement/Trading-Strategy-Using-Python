@@ -619,7 +619,6 @@ This systematic trading strategy utilizes Anchored VWAPs to identify trends, sup
             df = get_ohlc_from_yf(ticker=ticker, period=period, interval=interval)
         except Exception as e:
             print(f"Failed to fetch data for {ticker} from Yahoo Finance: {e}")
-            print("Alpha Vantage fetch not available as backup")
             return pd.DataFrame()
         
         df = add_atr_col_to_df(df, n=ATR_SMOOTHING_N, exponential=False)
@@ -630,12 +629,16 @@ This systematic trading strategy utilizes Anchored VWAPs to identify trends, sup
         print(df[["Open", "High", "Low", "Close", "Volume", f"atr_{ATR_SMOOTHING_N}", "is_min", "is_max"]].tail())
         return df
     
-    ticker = "AAPL"
-    df = prepare_data(ticker)
-
     ticker_data = {}
-    if not df.empty:
-       ticker_data[ticker] = df 
+    tickers = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", 
+    "FSR.JO", "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", 
+    "RDF.JO", "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"
+    ]
+
+    for ticker in tickers: 
+        df = prepare_data(ticker)
+        if not df.empty:
+            ticker_data[ticker] = df 
 
 Explanation
 
@@ -657,13 +660,15 @@ The code fetches two years of daily OHLCV data for the ticker using the get_ohlc
             anchor_dates.append(last_min_date.strftime('%Y-%m-%d %H:%M:%S'))
         if pd.notna(last_max_date):
             anchor_dates.append(last_max_date.strftime('%Y-%m-%d %H:%M:%S'))
-
+   
         anchor_dates = [date for date in anchor_dates if pd.notna (date)]
         print(f"Anchor dates for {df.attrs.get('ticker', 'unknown')}: {anchor_dates}")
         return anchor_dates
-        
-    anchor_dates_dict = {}
-    anchor_dates_dict[ticker] = get_anchor_dates(ticker_data[ticker])
+
+    anchor_dates_dict = {
+        ticker: get_anchor_dates(df.assign(attrs={"ticker": ticker}))
+        for ticker, df in ticker_data.items()
+    }
 
 Explanation
 
@@ -691,7 +696,7 @@ The code creates a list of anchor dates for a specific stock ticker, starting wi
         for i, anchor_date in enumerate(anchor_dates, 1):
             anchor_ts = pd.Timestamp(anchor_date).date()
             if anchor_ts in dates_only:
-                anchor_idx = list(dates_only).index(anchor_ts)
+                 anchor_idx = list(dates_only).index(anchor_ts)
             else:
                 if anchor_ts < df.index[0].date():
                     print(f"Info: Anchor date {anchor_date} is before the start of data for {ticker}. Using first available date.")
@@ -729,7 +734,7 @@ The code creates a list of anchor dates for a specific stock ticker, starting wi
             trend = "Bullish"
         elif last_close < vwap_year and last_close < vwap_max:
             trend = "Bearish"
- 
+
         signal = None
         if trend == "Bullish" and last_close > vwap_min and abs(last_close - vwap_min) < atr * 0.5:
             signal = "Long"
@@ -749,11 +754,11 @@ The code creates a list of anchor dates for a specific stock ticker, starting wi
         else:
             entry_price = stop_loss = take_profit = risk = None
 
-        account_size = 10000
-        risk_percent = 0.01
-        position_size = (account_size * risk_percent) / risk if risk else 0
+         account_size = 10000
+         risk_percent = 0.01
+         position_size = (account_size * risk_percent) / risk if risk else 0
 
-        return {
+         return {
             "trend": trend,
             "signal": signal,
             "last_close": last_close,
@@ -765,15 +770,15 @@ The code creates a list of anchor dates for a specific stock ticker, starting wi
             "stop_loss": stop_loss,
             "take_profit": take_profit,
             "position_size": position_size
-        }
+         }
 
-    results = {}
-    for ticker in ticker_data:
-        results[ticker] = analyze_ticker(ticker_data[ticker], ticker, anchor_dates_dict[ticker])
+results = {}
+for ticker in ticker_data:
+    results[ticker] = analyze_ticker(ticker_data[ticker], ticker, anchor_dates_dict[ticker])
 
-    results_df = pd.DataFrame(results).T
-    display(results_df)
-
+results_df = pd.DataFrame(results).T
+display(results_df)
+   
 Explanation
 
 This script computes and plots Anchored VWAPs for each ticker, then applies a VWAP-based trading strategy. It calculates three anchored VWAP levels—year-start, recent minimum, and recent maximum—and uses them to determine market trend and generate trade signals. A bullish trend is identified when the current close is above both the year-start and last-min VWAPs, while a bearish trend occurs when the close is below both the year-start and last-max VWAPs. Entry signals are triggered when the price is near key VWAPs within 0.5× ATR, and trade exits are defined using ATR-based stop losses and VWAP-based take profits. It outputs a structured dictionary with trade details and saves annotated charts for each ticker, turning the VWAP strategy into a fully operational, risk-managed system.
