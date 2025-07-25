@@ -1104,5 +1104,5 @@ With this data, several calculations are performed: determining the cost of debt
 
 This value momentum investing is an innovative investment strategy that merges the foundational principles of value and investing with the dynamics aspects of momentum investing. At its core, value investing seeks to identify stocks that are undervalued relative to their intrinsic worth. Momentum investing, on the other hand, leverages the tendency of stocks to continue moving in the same direction-upward or downward based on recent price movements. This hybrid approach aims to invest in undervalued stocks that are currently experiencing increasing demand, thereby maximizing potential returns while minimizing risk. By harnessing the strengths of both strategies, Amare Capital Management (Pty) Ltd can capitalize on market inefficiencies and identify opportunities that others may overlook.
 
-<img width="780" height="253" alt="ACM w colour" src="https://github.com/user-attachments/assets/10d1c94c-d6f6-43ca-8d8b-e8dfb985d25f" />
+<img width="780" height="253" align=centre alt="ACM w colour" src="https://github.com/user-attachments/assets/10d1c94c-d6f6-43ca-8d8b-e8dfb985d25f" />
 
