@@ -6,7 +6,7 @@
 
 **Executive Summary**
 
-Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) operating as a long-short equity hedge fund, headquartered in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in shares and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
+Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) operating as a long-short equity hedge fund, headquartered in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in stocks and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
 
 **Company Description**
 
