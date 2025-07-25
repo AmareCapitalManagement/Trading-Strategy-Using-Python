@@ -967,8 +967,19 @@ With this data, several calculations are performed: determining the cost of debt
     import pandas as pd
     import numpy as np
     import yfinance as yf
-    import matplotlib.pyplot as plt
-    import seaborn as sns 
+    import textwrap
+
+    def format_currency(value, prefix='R'):
+        try:
+            return f"{prefix}{value:,.2f}"
+        except:
+            return f"{prefix}0.00"
+
+    def format_percentage(value):
+        try:
+            return f"{value*100:.2f}%"
+        except:
+            return"0.00%"
  
     def calculate_dcf(ticker, growth_rate=0 perpetual_growth_rate=0.02, risk_free_rate=0.04, market_return=0.10, forecast_years=4):
         """
