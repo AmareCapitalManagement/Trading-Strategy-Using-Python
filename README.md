@@ -965,13 +965,14 @@ The necessary data to perform these calculations is sourced from Yahoo Finance a
 
 With this data, several calculations are performed: determining the cost of debt and cost of equity (using the Capiatl Asset Pricing Model or CAPM), computing WACC, calculating ROIC, forecasting future FCFFs, and estimating the terminal value. These inputs are then used to arrive at the fair value per share, helping us assess whether a stock is undervalued or overvalued.
 
+**DEFINE THE DCF FUNCTION**
+
 import pandas as pd
 import numpy as np
 import yfinance as yf
 import matplotlib.pyplot as plt
 import seaborn as sns 
 
-# Define the DCF Function 
 def calculate_dcf(ticker, growth_rate=0.1, perpetual_growth_rate=0.02, risk_free_rate=0.04, market_return=0.10, forecast_years=4):
     """
     Calculate the intrinsic value per share using a DCF model. 
