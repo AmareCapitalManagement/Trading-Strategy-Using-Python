@@ -971,7 +971,7 @@ import yfinance as yf
 import matplotlib.pyplot as plt
 import seaborn as sns 
 
-# Define the DCF Function 
+Define the DCF Function 
 def calculate_dcf(ticker, growth_rate=0.1, perpetual_growth_rate=0.02, risk_free_rate=0.04, market_return=0.10, forecast_years=4):
     """
     Calculate the intrinsic value per share using a DCF model. 
@@ -1078,9 +1078,7 @@ def calculate_dcf(ticker, growth_rate=0.1, perpetual_growth_rate=0.02, risk_free
     except Exception as e:
         print(f"Error fetching data or calculating DCF for {ticker}: {e}")
         return None
-
-# Function to create visualizations 
-
+        
 def plot_dcf_charts(results, ticker):
     if not results:
         print("No results to plot.")
