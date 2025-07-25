@@ -26,33 +26,19 @@ Vision: To establish Amare Capital Management as a leading long-short equity hed
 
 **Business Objectives**
 
-Short-Term (1-2 Years): Build a robust portfolio using our initial capital, generating positive returns through a combination of long-term investments and short-term CFD trades.
-
-Medium-Term (3-5 Years): Scale the portfolio by reinvesting profits and attracting additional capital through proven performance.
-
-Long-Term (5+ Years): Establish a track record as a high-performing hedge fund, harnessing the power of compounding.
+In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the fund. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the fund as a high-performing hedge fund by consistently compounding capital and building a credible investment history.
 
 **Investment Strategy**
 
-Value and Momentum Statistical Factors:
+The fund’s strategy combines value and momentum-based statistical factors with technical trading strategies and fundamental valuation models.
 
-Value Factor: Identifies undervalued stocks using valuation metrics. Stocks with the lowest valuation metrics are targeted for long positions, assuming they are undervalued and likely to outperform. Stocks with the highest valuation metrics are targeted for short-positions, assuming they are overvalued and likey to revert to the mean.
+The value factor component targets undervalued stocks based on fundamental valuation metrics. Stocks that appear cheap relative to their intrinsic worth are selected for long positions, with the expectation of outperformance. Conversely, stocks that appear overvalued are considered for short positions, assuming a potential mean reversion. The momentum factor seeks stocks demonstrating strong recent price performance across multiple timeframes, aiming to capture short-term trends through CFD trades.
 
-Momentum Factor: Targets stocks with strong recent price performance across different timeframes, capitalizing on short-term price trends for CFD trading.
+Using a long-short equity approach, the fund goes long on undervalued stocks with strong momentum to benefit from long-term appreciation. At the same time, it shorts overvalued or weak-momentum stocks to hedge risk and enhance returns, creating a market-neutral position where appropriate.
 
-Long-Short Equity Approach: Buys undervalued stocks with high momentum for long-term appreciation and shorts overvalued or low-momentum stocks to hedge risk and enhance returns.
+The strategy also incorporates trend-following technical systems, which form the bedrock of our backtesting framework. The Trend-Aligned Reversal Strategy uses candlestick reversal patterns such as hammer and shooting star formations, filtered by moving averages and volatility measures like the True Range Delta. Risk is managed through predefined stop-losses and profit targets. The Anchored VWAP Strategy identifies trend directions and optimal trade entries and exits using Anchored Volume Weighted Average Prices, further supported by ATR and SMA indicators for both daily and intraday setups. The EWMAC (Exponentially Weighted Moving Average Crossovers) Strategy is designed to capture medium- to long-term price trends with signals adjusted for volatility. These technical strategies not only guide trade execution but also serve as the foundation for our rigorous backtesting system, allowing us to test historical performance, validate signal reliability, and continuously refine our approach based on quantitative evidence.
 
-Trend-Following Technical Strategies:
-
-Trend-Aligned Reversal Strategy: Uses hammer and shooting star candlestick patterns, filtered by the Moving Average and volatility (True Range Delta), with risk management via stop-losses and profit targets to identify potential bullish and bearish reversals.
-
-Anchored VWAP Strategy: Identifies trends and entry/exit points using Anchored Volume Weighted Average Prices (VWAPs), supplemented by ATR and SMA for daily and intraday trading.
-
-EWMAC Trend-Following Strategy: Employs Exponentially Weighted Moving Average Crossovers to capture medium- to long-term trends, with volatility-adjusted signals.
-
-Fundamental Analysis Investing Stratgy:
-
-Discounted Cash Flow (DCF) Model: Estimates intrinsic stock values using Discounted Cash Flow analysis to validate investment decisions.
+Finally, a fundamental investing approach is used through a Discounted Cash Flow (DCF) model. This model estimates the intrinsic value of stocks based on projected future free cash flows, which are discounted back to present value using the Weighted Average Cost of Capital (WACC). This approach allows us to assess whether a stock is trading below its intrinsic value, validating if the investment aligns with our long-term compounding criteria and fundamental margin of safety.
 
 **Market Analysis**
 
