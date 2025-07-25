@@ -965,180 +965,77 @@ The necessary data to perform these calculations is sourced from Yahoo Finance a
 
 With this data, several calculations are performed: determining the cost of debt and cost of equity (using the Capiatl Asset Pricing Model or CAPM), computing WACC, calculating ROIC, forecasting future FCFFs, and estimating the terminal value. These inputs are then used to arrive at the fair value per share, helping us assess whether a stock is undervalued or overvalued.
 
-**DEFINE THE DCF FUNCTION**
+ import yfinance as yf
+    import pandas as pd
+    import numpy as np 
+    import matplotlib.pyplot as plt 
+    from datetime import datetime 
 
-import pandas as pd
-import numpy as np
-import yfinance as yf
-import matplotlib.pyplot as plt
-import seaborn as sns 
+    tickers = ["4SI.JO", "ABG.JO", "APF.JO", "ACS.JO", "AIP.JO", "ADR.JO", "ADH.JO", "AFE.JO", "AON.JO", "AOO.JO", "ADW.JO", "AME.JO", "ARI.JO", "AFT.JO", " ACT.JO", "AHL.JO", "AFH.JO", "AEL.JO", "APH.JO", "AGL.JO", "ANG.JO", "ANH.JO", "ACL.JO", "ART.JO", "AHA.JO", "AHB.JO", "ASC.JO", "APN.JO", "ARA.JO", "ARL.JO", , "ATT.JO", "AEG.JO", "AVI.JO", "AYO.JO","BWN.JO", "BAW.JO", "BEL.JO", "BHG.JO", "BID.JO", "BVT.JO", "BLU.JO", "BCF.JO", "BOX.JO", "BAT.JO", "BIK.JO", "BRT.JO", "BRN.JO", "BTI.JO", "BYI.JO", "CAA.JO", "CAC.JO", "CGR.JO", "CCO.JO", "CTA.JO", "CPI.JO", "CSB.JO", "CVW.JO", "CAT.JO", "CHP.JO", "CMO.JO", "CLH.JO", "CLS,JO", "CLI.JO", "CMH.JO", "CFR.JO", "CND.JO", "CML.JO", "CKS.JO", "COH.JO", "DTC.JO", "DLT.JO", "DNB.JO", "DKR.JO", "DIB.JO", "DCP.JO", "DSY.JO",  "DRD.JO", "EMH.JO", "EMN.JO", "EPS.JO", "EEL.JO", "ELI.JO", "EMI.JO", "ENX.JO", "EOH.JO", "EPE.JO", "EQU.JO", "EUZ.JO", "EXP.JO", "EXX.JO", "FBR.JO", "FGL.JO", "FSR.JO", "FFB.JO", "GAI.JO", "GML.JO", "GLN.JO", "GTC.JO", "GLI.JO", "GFI.JO", "GPL.JO", "GND.JO', "GRT.JO", "HMN.JO", "HAR.JO", "HET.JO", "HIL.JO", "HCI.JO", "HPR.JO", "HDC.JO", "HUG.JO", "HLM.JO", "HYP.JO", "INP.JO', "IPF.JO", "IVT.JO", "ISA.JO", "ITE.JO", "JSE.JO", "JBL.JO", "KAL.JO", "KAP.JO", "KRO.JO", "KBO.JO", "KP2.JO", "KIO.JO", "LAB.JO", "LEW.JO", "LBR.JO", "LHC.JO', "LTE.JO", "MMP.JO", "MSP.JO", "MDI.JO", MCZ.JO", "MRF.JO", "MTA.JO", "MFL.JO", "MED.JO", "MRI.JO", "MTM.JO", "MNP.JO", "MTH.JO", "MPT.JO", "MTN.JO", "MTNZF.JO", "MCG.JO", "MUR.JO", "MST.JO", "NPK.JO", "NPN.JO", "NED.JO", "NRP.JO, "NT1.JO", "NCS.JO", NY1.JO", "N91.JO", "NPH.JO", "NHM.JO", "NVS.JO", "NWL.JO", "OAO.JO", "OAS.JO", "OCE.JO", "OCT.JO", "OMU.JO", "OMN.JO', "ORN.JO", "OUT.JO", "PAN.JO", "PBG.JO", "PPH.JO", "PIK.JO", "PPC.JO", "PMR.JO", "PMV.JO", "PRX.JO", "KST.JO", "PSV.JO", "PPE.JO", "PPR.JO", "QFH.JO", "QLT.JO", "RBO.JO", "RMI.JO", "RNG.JO", "RBX.JO", "RCL.JO", "RDF.JO", "RNI.JO", "REM.JO", "REN.JO", "RES.JO", "RLO.JO", "RTO.JO", "RTN.JO", "RFG.JO", "RHB.JO", "RMH.JO", "SAC.JO", "SBP.JO", "SAR.JO', "SLM.JO", "SNT.JO", "SNV.JO", "SAP.JO", "SOL.JO", "SOLBE1.JO", "SCD.JO", "SHG.JO", "SEB.JO", "SEP.JO", "SHP.JO", "SSW.JO", 'SRE.JO", "SOH.JO", "S32.JO", "SDL.JO", "SPP.JO", "SEA.JO", "SUR.JO", "SDP.JO", "SSK.JO", "SSS.JO", "SUI.JO", "SPG.JO", "SRI.JO", "SYG.JO", "TLM.JO", "TKG.JO", "TEX.JO", "THA.JO", "TFG.JO", "TGA.JO", "TBS.JO", "TON.JO", "TDH.JO", "TCP.JO", "TPC.JO", "TRL.JO", "TMT.JO", "TRE.JO', "TTO.JO", "TRU.JO", "TSG.JO', "UPL.JO", "VAL.JO', "VIS.JO", "VOD.JO", "VKE.JO", "VUN.JO', "WBC.JO", "WSL.JP", "WEZ.JO", "WBO.JO", "WHL.JO", "YYLBEE.JO", "YRK.JO", "ZZD.JO", "ZED.JO"]
+  
+    start_date = "2024-01-01"
+    end_date = "2025-06-02"
 
-def calculate_dcf(ticker, growth_rate=0.1, perpetual_growth_rate=0.02, risk_free_rate=0.04, market_return=0.10, forecast_years=4):
-    """
-    Calculate the intrinsic value per share using a DCF model. 
+    Lfast = 16 
+    Lslow = 4 * Lfast 
+    vol_lookback = 25 
+    capmin = -20 
+    capmax = 20 
 
-    Parameters:
-        ticker (str): Company ticker symbol 
-        growth_rate (float): Annual growth rate for FCFF projections
-        perpetual_growth_rate (float): Growth rate for terminal value
-        risk_free_rate (float): Risk-free rate
-        market_return (float): Expected market return
-        forecast_years (int): Number of years for explicit forecast
+    def ewmac_forecast_scalar(Lfast, Lslow):
+        return 10 / np.sqrt(Lfast)
 
-    Returns:
-        dict: Results including FCFF, WACC, ROIC, and fair value per share.
+    f_scalar = ewmac_forecast_scalar(Lfast, Lslow)
 
-    """
-    try:
-        company = yf.Ticker(ticker)
-        financials = company.financials
-        balance_sheet = company.balance_sheet
-        cashflow = company.cashflow
-        info = company.info
+    data = yf.download(tickers, start=start_date, end=end_date)
 
-        ebit = financials.loc['EBIT'].iloc[0] if 'EBIT' in financials.index else 0
-        interest_expense = financials.loc['Interest Expense'].iloc[0] if 'Interest Expense' in financials.index else 0
-        income_before_tax = financials.loc['Pretax Income'].iloc[0] if 'Pretax Income' in financials.index else 0
-        taxes = financials.loc['Tax Provision'].iloc[0] if 'Tax Provision' in financials.index else 0
+    for ticker in tickers:
+        try:
+            price = data["Close"][ticker].dropna()
 
-        total_debt = balance_sheet.loc['Total Debt'].iloc[0] if 'Total Debt' in balance_sheet.index else 0
-        cash_equivalents = balance_sheet.loc['Cash And Cash Equivalents'].iloc[0] if 'Cash And Cash Equivalents' in balance_sheet.index else 0
-        current_assets = balance_sheet.loc['Current Assets'].iloc[0] if 'Current Assets' in balance_sheet.index else 0
-        current_liabilities = balance_sheet.loc['Current Liabilities'].iloc[0] if 'Current Liabilities' in balance_sheet.index else 0
-        net_ppe = balance_sheet.loc['Net PPE'].iloc[0] if 'Net PPE' in balance_sheet.index else 0
+        if price.empty:
+            print(f"No data for {ticker}. Skipping...")
+            continue
+            
+        fast_ewma = price.ewm(span=Lfast).mean()
+        slow_ewma = price.ewm(span=Lslow).mean()
+        raw_ewmac = fast_ewma - slow_ewma
 
-        depreciation = cashflow.loc['Depreciation And Amortization'].iloc[0] if 'Depreciation And Amortization' in cashflow.index else 0
-        capex = cashflow.loc['Capital Expenditure'].iloc[0] if 'Capital Expenditure' in cashflow.index else 0
-        working_capital_change = cashflow.loc['Change In Working Capital'].iloc[0] if 'Change In Working Capital' in cashflow.index else 0
+        returns = price.pct_change()
+        vol = returns.ewm(span=vol_lookback).std()
+        vol_adj_ewmac = raw_ewmac / vol
 
-        beta = info.get('beta', 1.0)
-        market_cap = info.get('marketCap', 0)
-        shares_outstanding = info.get('sharesOutstanding', 1)
+        forecast = vol_adj_ewmac * f_scalar
+        cap_forecast = forecast.clip(lower=capmin, upper=capmax)
 
-        fcff = ebit - taxes + depreciation - capex - working_capital_change
+        fig, axs = plt.subplots(1, 2, figsize=(18, 6))
 
-        effective_tax_rate = taxes / income_before_tax if income_before_tax != 0 else 0.25 
-        cost_of_debt = (interest_expense / total_debt) * (1- effective_tax_rate) if total_debt != 0 else 0
+        axs[0].plot(price, label='Price', color='black')
+        axs[0].plot(fast_ewma, label=f'Fast EWMA ({Lfast})', linestyle='--')
+        axs[0].plot(slow_ewma, label=f'Slow EWMA ({Lslow})', linestyle='--')
+        axs[0].set_title(f"EWMAC Crossover\n{ticker}")
+        axs[0].set_xlabel("Date")
+        axs[0].set_ylabel("Price")
+        axs[0].legend()
+        axs[0].grid(True)
+        
+        axs[1].plot(cap_forecast, label='Capped Forecast Signal', color='blue')
+        axs[1].axhline(10, color='green', linestyle='--', label='Buy Threshold')
+        axs[1].axhline(-10, color='red', linestyle='--', label='Sell Threshold')
+        axs[1].set_title("Capped EWMAC Forecast Signal")
+        axs[1].set_xlabel("Date")
+        axs[1].set_ylabel("Forecast Value")
+        axs[1].legend()
+        axs[1].grid(True)
 
-        cost_of_equity = risk_free_rate + beta * (market_return - risk_free_rate)
+        plt.tight_layout()
+        plt.savefig(f"{ticker}_ewmac_combined.png")
+        plt.close()
 
-        total_weight = total_debt + market_cap 
-        weight_debt = total_debt / total_weight if total_weight != 0 else 0
-        weight_equity = market_cap / total_weight if total_weight != 0 else 1
-        wacc = (weight_equity * cost_of_equity) + (weight_debt * cost_of_debt)
-
-        invested_capital = current_assets - current_liabilities + net_ppe 
-        roic = (ebit * (1 - effective_tax_rate)) / invested_capital if invested_capital != 0 else 0 
-
-        future_fcff = [fcff * (1 + growth_rate) ** t for t in range(1, forecast_years + 1)]
-
-        last_fcff = future_fcff[-1] if future_fcff else fcff
-        terminal_value = (last_fcff * (1 + perpetual_growth_rate)) / (wacc - perpetual_growth_rate) if wacc > perpetual_growth_rate else 0
-
-        pv_fcff = [fcff / (1 + wacc) ** t for t, fcff in enumerate(future_fcff, 1)]
-        pv_terminal = terminal_value / (1 + wacc) ** forecast_years if terminal_value != 0 else 0
-
-        total_pv = sum(pv_fcff) + pv_terminal
-        market_equity_value = total_pv + cash_equivalents - total_debt
-        fair_value_per_share = market_equity_value / shares_outstanding if shares_outstanding != 0 else 0
-
-        excess_returns = roic - wacc if roic != 0 and wacc != 0 else 0 
-
-        return {
-            'Ticker': ticker,
-            'FCFF': fcff,
-            'WACC': wacc,
-            'ROIC': roic,
-            'Excess Returns': excess_returns,
-            'Future FCFF': future_fcff,
-            'PV of FCFF': pv_fcff,
-            'Terminal Value': terminal_value,
-            'PV of Terminal Value': pv_terminal,
-            'Market Equity Value': market_equity_value,
-            'Fair Value Per Share': fair_value_per_share,
-            'Invested Capital': invested_capital
-        }
+        print(f" Saved: {ticker}_ewmac_combined.png")
 
     except Exception as e:
-        print(f"Error fetching data or calculating DCF for {ticker}: {e}")
-        return None
-
-**VISUALIZING THE RETURN DRIVERS OF THE INTRINSIC VALUE**
-
-def plot_dcf_charts(results, ticker):
-    if not results:
-        print("No results to plot.")
-        return
-
-    fig, axs = plt.subplots(2, 2, figsize=(14, 10))  
-  
-    years = ['TTM'] + [f'FY{2025 + i}' for i in range(1, 5)]
-    fcff_values = [results['FCFF']] + results['Future FCFF']
-    axs[0, 0].plot(years, fcff_values, marker='o', color='blue')
-    axs[0, 0].set_title(f'{ticker} FCFF Projections')
-    axs[0, 0].set_xlabel('Year')
-    axs[0, 0].set_ylabel('FCFF (R)')
-    axs[0, 0].grid(True)
-
-    pv_fcff_sum = sum(results['PV of FCFF'])
-    pv_terminal = results['PV of Terminal Value']
-    axs[0, 1].pie([pv_fcff_sum, pv_terminal],
-                  labels=['PV of FCFF', 'PV of Terminal Value'],
-                  autopct='%1.1f%%',
-                  colors=['lightgreen', 'lightgray'])
-    axs[0, 1].set_title(f'{ticker} Intrinsic Value Components')
-
-    axs[1, 0].bar(['WACC', 'ROIC'],
-                  [results['WACC'] * 100, results['ROIC'] * 100],
-                  color=['orange', 'purple'])
-    axs[1, 0].set_title(f'{ticker} WACC vs ROIC')
-    axs[1, 0].set_ylabel('Percentage (%)')
-    axs[1, 0].grid(True, axis='y')
-
-    growth_rates = np.linspace(max(0.05, results['WACC'] - 0.02), 0.15, 5)
-    wacc_rates = np.linspace(max(0.03, results['WACC'] - 0.02), results['WACC'] + 0.02, 5)
-    fair_values = np.zeros((len(growth_rates), len(wacc_rates)))
-    for i, g in enumerate(growth_rates):
-        for j, w in enumerate(wacc_rates):
-            temp_results = calculate_dcf(ticker,
-                                         growth_rate=g,
-                                         perpetual_growth_rate=min(g, w - 0.01),
-                                         risk_free_rate=0.04,
-                                         market_return=0.10)
-            fair_values[i, j] = temp_results['Fair Value Per Share'] if temp_results else 0
-
-    sns.heatmap(fair_values,
-                xticklabels=[f"{x*100:.1f}%" for x in wacc_rates],
-                yticklabels=[f"{x*100:.1f}%" for x in growth_rates],
-                annot=True,
-                fmt=".2f",
-                cmap="YlGnBu",
-                ax=axs[1, 1])
-    axs[1, 1].set_title(f'{ticker} Sensitivity: Fair Value (R)')
-    axs[1, 1].set_xlabel('WACC (%)')
-    axs[1, 1].set_ylabel('Growth Rate (%)')
-
-    plt.tight_layout()
-    plt.show()
-    
-ticker = "MSFT"
-results = calculate_dcf(ticker)
-if results:
-    print(f"DCF Analysis for {results['Ticker']}:")
-    print(f"FCFF: R{results['FCFF']:,.2f}")
-    print(f"WACC: {results['WACC']*100:.2f}%")
-    print(f"ROIC: {results['ROIC']*100:.2f}%")
-    print(f"Excess Returns: {results['Excess Returns']*100:.2f}%")
-    print(f"Future FCFF (2026-2030): {[f'T{x:,.2f}' for x in results['Future FCFF']]}")
-    print(f"PV of FCFF: {[f'R{x:,.2f}' for x in results['PV of FCFF']]}")
-    print(f"Terminal Value: R{results['Terminal Value']:,.2f}")
-    print(f"PV of Terminal Value: R{results['PV of Terminal Value']:,.2f}")
-    print(f"Market Equity Value: R{results['Market Equity Value']:,.2f}")
-    print(f"Fair Value Per Share: R{results['Fair Value Per Share']:,.2f}")
-
-    plot_dcf_charts(results, ticker)
-else:
-    print("Failed to compute DCF. Check ticker or data availability")
+        print(f" Error with {ticker}: {e}")
 
 **Explanation**
 
