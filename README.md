@@ -11,11 +11,17 @@ Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) oper
 **Company Description**
 
 Name: Amare Capital Management (Pty) Ltd
+
 Structure: Entrepreneurial Investment Partnership (EIP)
+
 Location: Pretoria, South Africa
+
 Leadership: Kabelo Junior Mosaka, Co-Founder and Hedge Fund Manager
+
 Contact: +27 65 852 2723 / kabelojunior10@gmail.com
+
 Mission: To achieve sustainable, risk-adjusted returns through systematic, evidence-based investment strategies leveraging undervaluation and price momentum.
+
 Vision: To establish Amare Capital Management as a leading long-short equity hedge fund in South Africa, recognized for disciplined capital allocation and innovative trading strategies.
 
 **Business Objectives**
