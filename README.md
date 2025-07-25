@@ -1062,6 +1062,8 @@ def calculate_dcf(ticker, growth_rate=0.1, perpetual_growth_rate=0.02, risk_free
         print(f"Error fetching data or calculating DCF for {ticker}: {e}")
         return None
 
+**VISUALIZING THE RETURN DRIVERS OF THE INTRINSIC VALUE**
+
 def plot_dcf_charts(results, ticker):
     if not results:
         print("No results to plot.")
@@ -1120,7 +1122,6 @@ def plot_dcf_charts(results, ticker):
     
 ticker = "MSFT"
 results = calculate_dcf(ticker)
-
 if results:
     print(f"DCF Analysis for {results['Ticker']}:")
     print(f"FCFF: R{results['FCFF']:,.2f}")
