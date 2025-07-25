@@ -6,7 +6,6 @@ Value factor identifies stocks trading below their intrinsic value, using metric
 
 (Efficient data processing requires libraries for numerical computations, data manipulation, and financial data retrieval)
 
-    ```python
     import numpy as np
     import pandas as pd
     import yfinance as yf
@@ -20,7 +19,7 @@ Value factor identifies stocks trading below their intrinsic value, using metric
     warnings.filterwarnings("ignore")
 
     stocks = ["ABG.JO", "AEL.JO", "AFT.JO","AGL.JO", "ANG.JO", "APN.JO", "ATT.JO", "BID.JO", "BTI.JO", "BVT.JO", "CFR.JO", "CLS.JO", "CPI.JO", "DSY.JO", "FSR.JO",                   "GRT.JO", "INL.JO", "INP.JO", "ITE.JO", "LBR.JO", "LHC.JO", "MNP.JO", "MRP.JO", "MTN.JO","NED.JO", "NPN.JO", "NTC.JO", "OMU.JO", "PPH.JO", "RDF.JO",                   "REM.JO", "RMH.JO", "RNI.JO", "SAP.JO", "SBK.JO", "SHP.JO", "SLM.JO", "SOL.JO", "SPP.JO", "TBS.JO", "TFG.JO", "TRU.JO", "VOD.JO", "WHL.JO"]
-     ```
+     
 **Explanation**
 
 We use numpy for calculations, pandas for data handling, yfinance for Yahoo Finance data, math for share calculations, scipy.stats for percentiles, and xlswriter for Excel output. The warnings library supresses yfinance depreciation warnings.
