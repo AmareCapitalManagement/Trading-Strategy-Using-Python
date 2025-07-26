@@ -24,6 +24,8 @@ Mission: To achieve sustainable, risk-adjusted returns through systematic, evide
 
 Vision: To establish Amare Capital Management as a leading long-short equity hedge fund in South Africa, recognized for disciplined capital allocation and innovative trading strategies.
 
+Goal: Aiming to scale Assets Under Management (AUM) to R1 billion through disciplined investing and strategic capital growth.
+
 **Business Objectives**
 
 In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the fund. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the fund as a high-performing hedge fund by consistently compounding capital and building a credible investment history.
