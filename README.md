@@ -6,7 +6,7 @@
 
 **Executive Summary**
 
-Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) operating as a long-short equity hedge fund, headquartered in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in stocks and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
+Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) operating as a long-short equity fund, headquartered in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in stocks and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
 
 **Company Description**
 
@@ -16,19 +16,19 @@ Structure: Entrepreneurial Investment Partnership (EIP)
 
 Location: Pretoria, South Africa
 
-Leadership: Kabelo Junior Mosaka, Co-Founder and Hedge Fund Manager (Bachelor of Commerce in Finance)
+Leadership: Kabelo Junior Mosaka, Co-Founder and Fund Manager (Bachelor of Commerce in Finance)
 
 Contact: +27 65 852 2723 / kabelojunior10@gmail.com
 
 Mission: To achieve sustainable, risk-adjusted returns through systematic, evidence-based investment strategies leveraging undervaluation and price momentum.
 
-Vision: To establish Amare Capital Management as a leading long-short equity hedge fund in South Africa, recognized for disciplined capital allocation and innovative trading strategies.
+Vision: To establish Amare Capital Management as a leading long-short equity fund in South Africa, recognized for disciplined capital allocation and innovative trading strategies.
 
-Goal: Aiming to scale the fund's assets under management (AUM) to R1 billion through disciplined investing and strategic capital growth.
+Goal: Aiming to scale the fund's assets under management (AUM) to R10 billion through disciplined investing and strategic capital growth.
 
 **Business Objectives**
 
-In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the fund. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the fund as a high-performing hedge fund by consistently compounding capital and building a credible investment history.
+In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the fund. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the fund as a high-performing fund by consistently compounding capital and building a credible investment history.
 
 **Investment Strategy**
 
@@ -44,7 +44,7 @@ The strategy also incorporates trend-following technical systems, which form the
 
 **Market Analysis**
 
-Amare Capital Management (Pty) Ltd positions itself to capitalize on the growing acceptance of hedge funds in South Africa. With only 39 retail hedge funds available across 11 management companies, the sector remains niche, offering significant room for new entrants. Our value proposition is tailored to exploit inefficiencies in the JSE, a market prone to volatility and mispriced assets
+Amare Capital Management (Pty) Ltd positions itself to capitalize on the growing acceptance of asset managers in South Africa. Our value proposition is tailored to exploit inefficiencies in the JSE, a market prone to volatility and mispriced assets
 
 **Conclusion**
 
