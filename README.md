@@ -6,29 +6,29 @@
 
 **Executive Summary**
 
-Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) specializing in long-short equity investing, headquartered in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in stocks and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
+Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) committed to quantitative investing and trading, based in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in stocks and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
 
 **Company Description**
 
 Name: Amare Capital Management (Pty) Ltd
 
-Structure: Entrepreneurial Investment Partnership (EIP)
+Structure: Long-Short Equity Hedge Fund
 
 Location: Pretoria, South Africa
 
-Leadership: Kabelo Junior Mosaka, Co-Founder and Chief Investment Officer (Bachelor of Commerce in Finance)
+Leadership: Kabelo Junior Mosaka, Co-Founder and Hedge Fund Manager (Bachelor of Commerce in Finance)
 
 Contact: +27 65 852 2723 / kabelojunior10@gmail.com
 
 Mission: To achieve sustainable, risk-adjusted returns through systematic, evidence-based investment strategies leveraging undervaluation and price momentum.
 
-Vision: To establish Amare Capital Management as a leading long-short equity firm in South Africa, recognized for disciplined capital allocation and innovative trading strategies.
+Vision: To establish Amare Capital Management as a leading long-short equity hedge fund in South Africa, recognized for disciplined capital allocation and innovative trading strategies.
 
 Goal: To grow the assets under management (AUM) to R1 billion through disciplined investing and aggressive capital growth.
 
 **Business Objectives**
 
-In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the partnership. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the firm as a high-performing firm by consistently compounding capital and building a credible investment history.
+In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the partnership. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the fund as a high-performing fund by consistently compounding capital and building a credible investment history.
 
 **Investment Strategy**
 
