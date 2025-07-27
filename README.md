@@ -28,7 +28,7 @@ Goal: To grow the assets under management (AUM) to R10 billion through disciplin
 
 **Business Objectives**
 
-In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the partnership. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the fund as a high-performing fund by consistently compounding capital and building a credible investment history.
+In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the partnership. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the firm as a high-performing firm by consistently compounding capital and building a credible investment history.
 
 **Investment Strategy**
 
