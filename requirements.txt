@@ -1,8 +1,0 @@
-backtesting
-scipy
-pandas
-yfinance
-
-kaleido
-mplfinance
-plotly
