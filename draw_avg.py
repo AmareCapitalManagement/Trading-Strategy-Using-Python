@@ -33,4 +33,4 @@ def draw_5_days_avg(ticker: str, interval: str = "15m"):
              "y": 1},
         tight_layout = True,
     )
-    
+    # draw_5_day_avg
