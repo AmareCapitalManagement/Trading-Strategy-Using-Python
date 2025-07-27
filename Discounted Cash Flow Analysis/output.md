@@ -8,4 +8,4 @@ Discounting: Uses Weighted Average Cost of Capital (WACC) as the discount rate, 
 
 Quality Assessment: Includes Return on Invested Capital (ROIC) to evaluate whether the firm generates value over its cost of capital.
 
-Output: Intrinsic value per share compared to market price, helping determine whether the stock is undervalued or overvalued.
+Output: Intrinsic value per share compared to market price, helping determine whether the stock is undervalued or overvalued (long-term investing).
