@@ -6,7 +6,7 @@
 
 **Executive Summary**
 
-Amare Capital Management is a Private Family Office committed to quantitative investing and trading, based in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in stocks and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
+Amare Capital Management is a private investment company committed to quantitative investing and trading, based in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in stocks and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
 
 **Company Description**
 
@@ -22,13 +22,13 @@ Contact: +27 65 852 2723 / kabelojunior10@gmail.com
 
 Mission: To achieve sustainable, risk-adjusted returns through systematic, evidence-based investment strategies leveraging undervaluation and price momentum.
 
-Vision: To establish Amare Capital Management as a leading long-short equity hedge fund in South Africa, recognized for disciplined capital allocation and innovative trading strategies.
+Vision: To establish Amare Capital Management as a leading private investment company in South Africa, recognized for disciplined capital allocation and innovative trading strategies.
 
 Goal: To grow the assets under management (AUM) to R10 billion through disciplined investing and aggressive capital growth.
 
 **Business Objectives**
 
-In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the partnership. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the fund as a high-performing fund by consistently compounding capital and building a credible investment history.
+In the short term (1–2 years), the goal is to build a robust investment portfolio using the initial capital of the partnership. This portfolio will aim to generate positive returns through a blend of long-term investments and short-term trading in Contracts for Difference (CFDs). Over the medium term (3–5 years), the strategy focuses on scaling the portfolio by reinvesting profits and attracting additional capital, leveraging a proven track record of performance. In the long term (5+ years), the objective is to establish the firm as a high-performing firm by consistently compounding capital and building a credible investment history.
 
 **Investment Strategy**
 
@@ -38,15 +38,9 @@ The value factor component targets undervalued stocks based on fundamental valua
 
 A fundamental investing approach is used through a Discounted Cash Flow (DCF) model. This model estimates the intrinsic value of stocks based on projected future free cash flows, which are discounted back to present value using the Weighted Average Cost of Capital (WACC). This approach allows us to assess whether a stock is trading below its intrinsic value, validating if the investment aligns with our long-term compounding criteria and fundamental margin of safety.
 
-Using a long-short equity approach, the fund goes long on undervalued stocks with strong momentum to benefit from long-term appreciation. At the same time, it shorts overvalued or weak-momentum stocks to hedge risk and enhance returns, creating a market-neutral position where appropriate.
+Using a long-short equity approach, the firm goes long on undervalued stocks with strong momentum to benefit from long-term appreciation. At the same time, it shorts overvalued or weak-momentum stocks to hedge risk and enhance returns, creating a market-neutral position where appropriate.
 
 The strategy also incorporates trend-following technical systems, which form the bedrock of our backtesting framework. The Trend-Aligned Reversal Strategy uses candlestick reversal patterns such as hammer and shooting star formations, filtered by moving averages and volatility measures like the True Range Delta. Risk is managed through predefined stop-losses and profit targets. The Anchored VWAP Strategy identifies trend directions and optimal trade entries and exits using Anchored Volume Weighted Average Prices, further supported by ATR and SMA indicators for both daily and intraday setups. The EWMAC (Exponentially Weighted Moving Average Crossovers) Strategy is designed to capture medium- to long-term price trends with signals adjusted for volatility. These technical strategies not only guide trade execution but also serve as the foundation for our rigorous backtesting system, allowing us to test historical performance, validate signal reliability, and continuously refine our approach based on quantitative evidence.
-
-**Structure and Philosophy**
-
-Amare Capital Management operates as a private family office structured like a hedge fund. We do not market to institutions, as this would alter the economics and long-term intent of the business. Our capital is sourced from friends, family, and trusted partners—focused on building trust, credibility, and financial legacy within our own circle.
-
-The R10 billion AUM target reflects the scale of South Africa’s leading long-short equity funds. We aim to reach this through disciplined performance, not outside fundraising.
 
 **Conclusion**
 
