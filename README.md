@@ -16,7 +16,7 @@ Structure: Private Investment Company
 
 Location: Pretoria, South Africa
 
-Leadership: Kabelo Junior Mosaka, Co-Founder and Hedge Fund Manager (Bachelor of Commerce in Finance)
+Leadership: Kabelo Junior Mosaka, Co-Founder and Chief Investment Officer (Bachelor of Commerce in Finance)
 
 Contact: +27 65 852 2723 / kabelojunior10@gmail.com
 
