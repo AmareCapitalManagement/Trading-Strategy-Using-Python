@@ -6,7 +6,7 @@
 
 **Executive Summary**
 
-Amare Capital Management is an Entrepreneurial Investment Partnership (EIP) committed to quantitative investing and trading, based in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in stocks and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
+Amare Capital Management is a Private Family Office committed to quantitative investing and trading, based in Pretoria, South Africa. The firm employs a sophisticated quantitative model. We execute long-term investments and short-term trades in stocks and derivative Contracts for Difference (CFDs) on the Johannesburg Stock Exchange (JSE). Our mission is to deliver consistent, risk-adjusted returns by capitalizing on market inefficiencies through a disciplined, data-driven approach combining value and momentum investing. 
 
 **Company Description**
 
@@ -24,7 +24,7 @@ Mission: To achieve sustainable, risk-adjusted returns through systematic, evide
 
 Vision: To establish Amare Capital Management as a leading long-short equity hedge fund in South Africa, recognized for disciplined capital allocation and innovative trading strategies.
 
-Goal: To grow the assets under management (AUM) to R1 billion through disciplined investing and aggressive capital growth.
+Goal: To grow the assets under management (AUM) to R10 billion through disciplined investing and aggressive capital growth.
 
 **Business Objectives**
 
@@ -41,6 +41,12 @@ A fundamental investing approach is used through a Discounted Cash Flow (DCF) mo
 Using a long-short equity approach, the fund goes long on undervalued stocks with strong momentum to benefit from long-term appreciation. At the same time, it shorts overvalued or weak-momentum stocks to hedge risk and enhance returns, creating a market-neutral position where appropriate.
 
 The strategy also incorporates trend-following technical systems, which form the bedrock of our backtesting framework. The Trend-Aligned Reversal Strategy uses candlestick reversal patterns such as hammer and shooting star formations, filtered by moving averages and volatility measures like the True Range Delta. Risk is managed through predefined stop-losses and profit targets. The Anchored VWAP Strategy identifies trend directions and optimal trade entries and exits using Anchored Volume Weighted Average Prices, further supported by ATR and SMA indicators for both daily and intraday setups. The EWMAC (Exponentially Weighted Moving Average Crossovers) Strategy is designed to capture medium- to long-term price trends with signals adjusted for volatility. These technical strategies not only guide trade execution but also serve as the foundation for our rigorous backtesting system, allowing us to test historical performance, validate signal reliability, and continuously refine our approach based on quantitative evidence.
+
+**Structure and Philosophy**
+
+Amare Capital Management operates as a private family office structured like a hedge fund. We do not market to institutions, as this would alter the economics and long-term intent of the business. Our capital is sourced from friends, family, and trusted partners—focused on building trust, credibility, and financial legacy within our own circle.
+
+The R10 billion AUM target reflects the scale of South Africa’s leading long-short equity funds. We aim to reach this through disciplined performance, not outside fundraising.
 
 **Conclusion**
 
