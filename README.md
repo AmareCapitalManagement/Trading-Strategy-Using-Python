@@ -12,7 +12,7 @@ Amare Capital Management is a private investment company committed to quantitati
 
 Name: Amare Capital Management (Pty) Ltd
 
-Structure: Long-Short Equity Hedge Fund
+Structure: Private Investment Company 
 
 Location: Pretoria, South Africa
 
