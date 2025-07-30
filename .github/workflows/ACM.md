@@ -1,1 +1,1 @@
-We aim to manage R10 billion using systematic equity strategies, reflecting our commitment to scale, sharpen our edge, and deliver strong, risk-adjusted returns. This will establish us as the dominant player in long-short equity investing.
+We aim to grow to R10 billion in assets under management using systematic equity strategies, reflecting our commitment to scale, sharpen our edge, and deliver strong, risk-adjusted returns. This will establish us as the dominant player in long-short equity investing.
