@@ -4,7 +4,6 @@ from constants import first_day_of_year
 from import_ohlc.yahoo_finance import get_ohlc_from_yf
 from misc.chart_annotation import get_chart_annotation_1d 
 from vwaps_plot import vwaps_plot_build_save 
-
 # NOTE In case of problems with Yahoo Finance, pass another function as the get_ohlc_func parameter to retrieve data from another provider.
 # For example, from Alpha Vantage.
 
