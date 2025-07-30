@@ -1,5 +1,4 @@
 from typing import Callable, List 
-
 from import_ohlc.yahoo_finance import get_ohlc_from_yf
 from misc.chart_annotation import get_chart_annotation_1d
 from vwaps_plot import vwaps_plot_build_save
@@ -21,3 +20,4 @@ def draw_daily_chart_ticker(
         add_last_min_max=True,
         file_name=f"daily_{ticker}.png",
     )
+
