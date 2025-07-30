@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import bootstrap
 
-from con2stants import DEFAULT_BOOTSTRAP_CONFIDENCE_LEVEL
+from constants2 import DEFAULT_BOOTSTRAP_CONFIDENCE_LEVEL
 
 
 def get_bootstrapped_mean_ci(
