@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
 
-from 2constants import (
+from constants2 import (
     DEFAULT_BOOTSTRAP_CONFIDENCE_LEVEL,
     FEATURE_COL_NAME_BASIC,
     LOG_FILE,
