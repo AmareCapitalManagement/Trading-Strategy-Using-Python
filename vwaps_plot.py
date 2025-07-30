@@ -195,6 +195,6 @@ def vwaps_plot_build_save(
 
     fig.update_layout(showlegend=False)
 
-    # NOTE it requires kaleido package,
+    # NOTE it requires kaleido package
     
     fig.write_image(file_name)
