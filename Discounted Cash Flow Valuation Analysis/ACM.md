@@ -1,4 +1,4 @@
-**Discounted Cash Flow (DCF) Valuation Model**
+**Discounted Cash Flow Valuation Model**
 
 Objective: Estimate the intrinsic value of a stock using projected free cash flows, risk-adjusted discounting, and quality metrics.
 
