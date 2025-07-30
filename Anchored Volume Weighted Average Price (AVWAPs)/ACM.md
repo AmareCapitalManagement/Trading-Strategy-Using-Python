@@ -1,4 +1,4 @@
-**Anchored VWAP (AVWAP) System**
+**Anchored Volume Weighted Average Price (AVWAPs)**
 
 Objective: Identify dynamic support/resistance levels and trend context using volume-weighted price anchoring.
 
