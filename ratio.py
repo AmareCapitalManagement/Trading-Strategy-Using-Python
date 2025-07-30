@@ -30,4 +30,4 @@ def draw_ratio(
         plot_title = f"{ticker_1}-{ticker_2} Close-Close Ratio"
     df["Close-CloseRatio"].plot(title=plot_title)
     plt.savefig(f"ratio_{ticker_1}_{ticker_2}.png")
-    #print(df)
+    print(df)
