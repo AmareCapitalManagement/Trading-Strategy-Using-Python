@@ -1,4 +1,4 @@
-**Trend-Aligned Reversal Strategy with Volatility and Risk Management Filters**
+**Factor Aligned Reversal Model with Volatility and Risk Management Filters**
 
 Objective: Capture short-term price reversals within broader trends, using technical confirmation and robust risk controls.
 
