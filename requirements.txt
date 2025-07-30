@@ -6,3 +6,4 @@ yfinance
 kaleido
 mplfinance
 plotly
+
