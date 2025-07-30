@@ -1,1 +1,1 @@
-Our objective is to manage and trade R1 billion in capital using systematic equity strategies. This target reflects our ambition to scale our firm, sharpen our edge, and deliver long-term, risk-adjusted returns through quantitative investing.
+We aim to manage R10 billion using systematic equity strategies, reflecting our commitment to scale, sharpen our edge, and deliver strong, risk-adjusted returns. This will establish us as the dominant player in long-short equity investing.
