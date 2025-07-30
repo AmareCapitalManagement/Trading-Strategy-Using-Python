@@ -11,7 +11,7 @@ def add_required_cols_for_f_v1_basic(df: pd.DataFrame) -> pd.DataFrame:
     df_columns = df.columns # Add this line to get the columns from df
     internal_df = df.copy() #Add this line to create the internal_df used later
 
-    if f"ma_{MOVING_AVERAGE_N}" not in df_columns:
+    if f"ma_{MOVING_AVERAGE_N}" not in df_columns: 
         if len(internal_df) >= MOVING_AVERAGE_N:
             internal_df = add_moving_average(df=internal_df, n=MOVING_AVERAGE_N)
         else:
