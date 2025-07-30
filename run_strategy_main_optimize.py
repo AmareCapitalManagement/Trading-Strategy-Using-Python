@@ -28,7 +28,7 @@ def run_all_tickers_with_parameters(
 ) -> float:
 
     # NOTE
-    # This is almost the same code as in the run_strategy_main_simple.py file,
+    # This is almost the same code as in the run_strategy_main_simple.py file
     # with some minor changes explained below.
 
     # clear LOG_FILE every time
