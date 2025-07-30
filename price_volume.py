@@ -10,7 +10,6 @@ from import_ohlc.yahoo_finance import get_ohlc_from_yf
 
 VALUE_REGION_PERCENTILE = 0.7
 
-
 def _get_volume_profile_value_region_indexes(
     volume_profile: np.ndarray,
 ) -> Tuple[int, int]:
