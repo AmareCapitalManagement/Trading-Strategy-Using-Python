@@ -1,6 +1,4 @@
-# Module
 import pandas as pd
-
 from utils.misc import ensure_df_has_all_required_columns
 
 
