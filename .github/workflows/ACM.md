@@ -1,1 +1,1 @@
-Our mission is to scale our trading operations to R1 billion in assets under managememt.
+Our objective is to manage and trade R1 billion in capital using systematic equity strategies. This target reflects our ambition to scale our firm, sharpen our edge, and deliver long-term, risk-adjusted returns through quantitative investing.
