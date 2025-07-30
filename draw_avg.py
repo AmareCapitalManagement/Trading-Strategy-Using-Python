@@ -1,6 +1,5 @@
 import mplfinance as mpf
 import pandas as pd 
-
 from import_ohlc.yahoo_finance import get_ohlc_from_yf 
 
 def draw_5_days_avg(ticker: str, interval: str = "15m"):
