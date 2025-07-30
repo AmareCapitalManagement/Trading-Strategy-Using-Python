@@ -1,3 +1,5 @@
 **Strategic Focus**
 
-  Our goal is to grow our assets under management (AUM) to R1 billion, establishing Amare Capital Management (Pty) Ltd as the leading long-short equity hedge fund in South Africa.
+Our strategic goal is to grow assets under management (AUM) to R1 billion, positioning Amare Capital Management (Pty) Ltd as South Africa’s leading long-short equity hedge fund, managing private capital exclusively from friends and family.
+
+
