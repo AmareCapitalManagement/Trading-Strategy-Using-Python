@@ -24,7 +24,7 @@ if __name__ == "__main__":
     # clear LOG_FILE every time
     open(LOG_FILE, "w", encoding="UTF-8").close()
 
-    # Here you can set different parameters of your strategy.
+    # Here you can set different parameters of your strategy
     # They will eventually be passed
     # to get_desired_current_position_size()
     # and process_special_situations()
