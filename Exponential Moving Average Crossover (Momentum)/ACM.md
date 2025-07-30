@@ -1,4 +1,4 @@
-**EWMAC Trend-Following Strategy**
+**Exponential Moving Average Crossover (Momentum)**
 
 Objective: Systematically capture sustained directional moves through trend detection and signal normalization.
 
