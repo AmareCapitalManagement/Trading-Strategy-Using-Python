@@ -1,4 +1,4 @@
-**Quantitative Value and Momentum Factor Strategy**
+**Quantitative Value and Momentum Factor**
 
 Objective: Identify stocks that are fundamentally undervalued and technically strong.
 
