@@ -2,7 +2,7 @@ from typing import Callable
 
 import pandas as pd
 
-fres.f_v1_basic import add_features_v1_basic
+from f_v1_basic import add_features_v1_basic
 
 
 def get_df_with_fwd_ret(
