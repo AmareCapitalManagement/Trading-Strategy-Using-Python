@@ -7,7 +7,8 @@ import pandas as pd
 from dotenv import load_dotenv
 
 from constants2 import LOG_FILE, tickers_all
-from customizable.strategy_params import StrategyParams features.f_v1_basic import add_features_v1_basic
+from customizable.strategy_params import StrategyParams 
+from f_v1_basic import add_features_v1_basic
 from strategy.all_tickers import run_all_tickers
 from utils.local_data import TickersData
 
