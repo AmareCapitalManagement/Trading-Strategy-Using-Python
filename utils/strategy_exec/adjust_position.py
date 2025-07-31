@@ -10,7 +10,7 @@ from constants2 import (
     CLOSED_SIDE_CHANGE,
 )
 
-from .misc import get_shares_count, log_all_trades
+from utils.strategy_exec.misc import get_shares_count, log_all_trades
 
 def adjust_position(
     strategy: Strategy, current_position_size: float, desired_size: float
