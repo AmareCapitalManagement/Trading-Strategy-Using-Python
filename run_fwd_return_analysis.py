@@ -14,7 +14,7 @@ from constants2 import (
     tickers_all,
 )
 from customizable.misc import get_ma_200_relat
-from features.f_v1_basic import add_features_v1_basic
+from f_v1_basic import add_features_v1_basic
 from utils.bootstrap import analyze_values_by_group, get_bootstrapped_mean_ci
 from utils.get_df_with_fwd_ret import add_fwd_ret
 from utils.local_data import TickersData
